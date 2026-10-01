@@ -127,6 +127,4 @@ export function useCart() {
   return { ...snapshot, count, subtotalPence };
 }
 
-export function formatPence(pence: number) {
-  return `£${(pence / 100).toFixed(2)}`;
-}
+export { formatPence } from "./money";

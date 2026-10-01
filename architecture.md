@@ -8,6 +8,14 @@
 - **Payments:** Paystack — test mode for all development; confirm whether this
   Paystack account supports GBP settlement before going live. If it doesn't,
   flag this back to the business owner before launch, don't silently default to NGN.
+  - **Currency finding (2026-10-01):** with Card enabled in test mode, the account
+    takes **NGN only**. GBP is recognised but returns "No active channel"; USD is
+    not supported. **Decision for the course submission:** shop prices and order
+    totals stay in GBP; in test mode only, Paystack is charged the naira equivalent
+    at a fixed demo rate (£1 = ₦2,000), clearly labelled at checkout. Config lives in
+    `lib/payment-config.ts`, and the conversion is refused if a live key is used.
+    **Before live launch:** get GBP enabled by Paystack, or move to a GBP-native
+    provider (e.g. Stripe). Flagged to the business owner in prd.md.
 - **Transactional email:** Mailgun — sandbox domain for now (can only send to
   pre-authorized test addresses), real domain verification pending business
   owner's domain.

@@ -19,6 +19,18 @@ export type Order = {
   paystack_reference: string | null;
   total_gbp: number;
   created_at: string;
+  // Added in supabase/002_checkout_fields.sql
+  currency: string;
+  fulfilment: "pickup" | "delivery";
+  customer_name: string | null;
+  customer_email: string | null;
+  phone: string | null;
+  address_line1: string | null;
+  address_line2: string | null;
+  city: string | null;
+  postcode: string | null;
+  delivery_fee_gbp: number;
+  paid_at: string | null;
 };
 
 export type OrderItem = {

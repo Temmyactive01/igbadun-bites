@@ -86,4 +86,8 @@ supplier" etc.) — so the data model is ready for real content later, not rebui
 - Social handles (phone and email now confirmed — see footer, MVP item 8)
 - Delivery areas, charges, collection arrangements
 - Payment/booking/cancellation terms
+- **Payments in GBP (blocker for live launch):** the Paystack account can't take
+  GBP — test checkout currently charges a naira equivalent at a demo rate. Before
+  launch: ask Paystack to enable GBP, or switch to a GBP-native provider such as
+  Stripe (see architecture.md)
 - Preferred domain name
