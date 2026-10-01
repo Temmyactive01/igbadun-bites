@@ -1,4 +1,5 @@
 import type { Product } from "@/lib/types";
+import AddToCartButton from "./cart/AddToCartButton";
 import { CrunchyIcon, iconForCategory } from "./SnackIcons";
 import { WovenTexture } from "./Textures";
 
@@ -47,12 +48,16 @@ export default function ProductCard({ product, number, toneIndex }: Props) {
         <p className="mt-0.5 text-xs text-brown-soft sm:mt-1 sm:text-sm">{product.pack_size}</p>
         <p className="mt-2 line-clamp-2 text-sm leading-snug sm:mt-3 sm:text-[0.95rem] sm:leading-relaxed text-brown-soft">{product.description}</p>
         <div className="mt-auto pt-3 sm:pt-5">
-          <button
-            disabled={soldOut}
-            className="press w-full rounded-full bg-brown px-4 py-2.5 text-sm font-medium sm:px-5 sm:py-3 sm:text-base text-cream hover:bg-gold hover:text-brown disabled:cursor-not-allowed disabled:bg-brown/20 disabled:text-brown/60 disabled:hover:bg-brown/20"
-          >
-            {soldOut ? "Sold out" : "Add to cart"}
-          </button>
+          <AddToCartButton
+            soldOut={soldOut}
+            item={{
+              productId: product.id,
+              name: product.name,
+              packSize: product.pack_size,
+              category: product.category,
+              pricePence: Math.round(Number(product.price_gbp) * 100),
+            }}
+          />
         </div>
       </div>
     </article>

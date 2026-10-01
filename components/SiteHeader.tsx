@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
+import CartButton from "./cart/CartButton";
 import SignInButton from "./SignInButton";
 
 // Reads the signed-in user (if any) from the session cookie on the server,
@@ -20,8 +21,9 @@ export default async function SiteHeader() {
           Igbadun<span className="text-gold">.</span>Bites
         </Link>
 
+        <div className="flex items-center gap-2 sm:gap-3">
         {claims ? (
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <span className="hidden text-sm text-brown-soft sm:inline">
               Hello, <span className="font-semibold text-brown">{firstName}</span>
             </span>
@@ -41,6 +43,8 @@ export default async function SiteHeader() {
         ) : (
           <SignInButton />
         )}
+        <CartButton />
+        </div>
       </div>
     </header>
   );

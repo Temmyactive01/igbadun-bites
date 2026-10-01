@@ -2,6 +2,7 @@ import Divider from "@/components/Divider";
 import ProductCard from "@/components/ProductCard";
 import Reveal from "@/components/Reveal";
 import { AdireTexture } from "@/components/Textures";
+import { CONTACT } from "@/lib/contact";
 import { categoryAnchor, getProducts, groupByCategory } from "@/lib/products";
 
 const numberWords = ["Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen"];
@@ -150,6 +151,25 @@ export default async function Home() {
                       </div>
                     </section>
                   ))}
+                </div>
+
+                {/* Quiet note: the catalog isn't exhaustive */}
+                <div className="mt-14 grid sm:mt-16 lg:grid-cols-12">
+                  <p className="flex items-start gap-3 border-t border-brown/10 pt-6 text-brown-soft lg:col-span-9 lg:col-start-4">
+                    <span className="mt-[0.45em] h-2 w-2 shrink-0 rotate-45 border border-gold" aria-hidden />
+                    <span>
+                      Don&rsquo;t see what you&rsquo;re after?{" "}
+                      <a
+                        href={CONTACT.whatsappHref}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-medium text-brown underline decoration-gold/60 underline-offset-4 transition duration-200 ease-brand hover:text-gold-dark hover:decoration-gold"
+                      >
+                        Message us on WhatsApp
+                      </a>{" "}
+                      — we&rsquo;re happy to help.
+                    </span>
+                  </p>
                 </div>
               </>
             )}

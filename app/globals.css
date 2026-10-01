@@ -23,6 +23,14 @@
   --shadow-warm-lg: 0 4px 12px rgb(59 36 22 / 0.1), 0 20px 48px rgb(59 36 22 / 0.14);
 
   --ease-brand: cubic-bezier(0.2, 0.7, 0.3, 1);
+
+  /* Basket count "bump" when an item is added */
+  --animate-bump: bump 350ms var(--ease-brand);
+  @keyframes bump {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.35); }
+    100% { transform: scale(1); }
+  }
 }
 
 body {
@@ -129,6 +137,9 @@ h4 {
   }
   .diamond,
   .diamond-core {
+    animation: none;
+  }
+  .animate-bump {
     animation: none;
   }
 }
