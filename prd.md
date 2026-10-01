@@ -28,6 +28,12 @@ business owner something genuinely usable to build on afterward.
 8. **Basic footer** — tagline, "Bringing Back Memories, One Bite at a Time," social
    placeholders, note that full site (About, Party Catering, Gifts, FAQs, Policies,
    Contact) is "coming soon" — do not fake these pages, just don't build them yet.
+   **Confirmed contact details (from the business owner):**
+   - Call/WhatsApp: 07709870134
+   - Email: igbadun_bites@yahoo.com
+   - Services: pickup & delivery, plus custom snack packs for events, parties and
+     gifting (enquiries by phone/WhatsApp/email until the enquiry form is built in
+     Phase 2)
 
 ## Explicitly deferred to Phase 2 (after Friday)
 - About Us (founder story) — needs real content from business owner anyway
@@ -77,7 +83,7 @@ supplier" etc.) — so the data model is ready for real content later, not rebui
 - Confirm/correct the product descriptions for Gurundi, Kokoro Egba, Dankwa, and
   Sisi Pelebe — the current ones are placeholder guesses, not the real copy
 - Founder story / business location
-- Phone, email, social handles
+- Social handles (phone and email now confirmed — see footer, MVP item 8)
 - Delivery areas, charges, collection arrangements
 - Payment/booking/cancellation terms
 - Preferred domain name

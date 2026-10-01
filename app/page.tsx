@@ -17,17 +17,6 @@ export default async function Home() {
 
   return (
     <>
-      <header className="relative z-10 border-b border-brown/10 bg-cream/80 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-8">
-          <span className="font-heading text-2xl font-bold tracking-tight">
-            Igbadun<span className="text-gold">.</span>Bites
-          </span>
-          <button className="press rounded-full border border-brown/25 px-5 py-2 text-sm font-medium hover:border-brown hover:bg-brown hover:text-cream">
-            Sign in
-          </button>
-        </div>
-      </header>
-
       <main className="flex-1">
         {/* ---------- Hero ---------- */}
         <section className="relative overflow-hidden">
@@ -167,20 +156,6 @@ export default async function Home() {
           </div>
         </section>
       </main>
-
-      <footer className="relative overflow-hidden bg-brown text-cream">
-        <AdireTexture id="footer-adire" className="text-cream opacity-[0.05]" />
-        <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-8">
-          <p className="display font-heading text-5xl font-bold sm:text-7xl">
-            Igbadun<span className="text-gold">.</span>Bites
-          </p>
-          <p className="mt-4 font-heading text-xl italic text-cream/85">Bringing Back Memories, One Bite at a Time.</p>
-          <div className="mt-10 flex flex-col gap-4 border-t border-cream/15 pt-6 text-sm text-cream/60 sm:flex-row sm:justify-between">
-            <p>Coming soon: About us · Party catering · Gifts &amp; event packs · FAQs · Policies · Contact</p>
-            <p>Instagram · TikTok · Facebook</p>
-          </div>
-        </div>
-      </footer>
     </>
   );
 }
