@@ -8,10 +8,19 @@
   # Next.js 16 needs Node 20.9+; pin a current LTS so builds are predictable.
   NODE_VERSION = "22"
 
-  # Netlify's secrets scan flagged server secrets inside .next/cache — that's
-  # Turbopack's internal build cache (*.sst), which records env values to know
-  # when to rebuild. It is never served to visitors. Verified locally: the
-  # secrets do NOT appear in .next/server or .next/static (browser code).
-  # So we skip ONLY the cache folder; everything else is still scanned,
-  # including browser bundles, where a real leak would show up.
-  SECRETS_SCAN_OMIT_PATHS = ".next/cache/**"
+  # ---- Secrets scanning: narrow exceptions only ----
+  #
+  # 1) Paths: Turbopack's internal build cache (*.sst) records env values so it
+  #    knows when to rebuild. It is never served to visitors. On Netlify it sits
+  #    under .netlify/.next/cache (locally .next/cache), so both are listed.
+  #    Verified locally: no server secret appears in .next/server or
+  #    .next/static — those are still scanned, so a real leak would still fail.
+  SECRETS_SCAN_OMIT_PATHS = ".next/cache/**,.netlify/.next/cache/**"
+  #
+  # 2) Keys: values that are PUBLIC BY DESIGN and must reach the browser:
+  #    - Supabase project URL and publishable ("anon") key — data is protected
+  #      by Row Level Security, not by hiding this key.
+  #    - Paystack public key (pk_...) — public by design (currently unused).
+  #    Server secrets (SUPABASE_SERVICE_ROLE_KEY, PAYSTACK_SECRET_KEY,
+  #    MAILGUN_API_KEY) are deliberately NOT listed: they stay fully scanned.
+  SECRETS_SCAN_OMIT_KEYS = "NEXT_PUBLIC_SUPABASE_URL,NEXT_PUBLIC_SUPABASE_ANON_KEY,NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY"
