@@ -1,12 +1,14 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { safeNextPath } from "@/lib/safe-redirect";
+import { siteOrigin } from "@/lib/site-origin";
 import { createClient } from "@/lib/supabase/server";
 
 // Google → Supabase → here. Supabase sends a one-time `code`, which we swap
 // for a login session (stored in a cookie), then send the visitor back to
 // the page they started from.
 export async function GET(request: NextRequest) {
-  const { searchParams, origin } = request.nextUrl;
+  const { searchParams } = request.nextUrl;
+  const origin = siteOrigin(request);
   const code = searchParams.get("code");
   const next = safeNextPath(searchParams.get("next"));
 

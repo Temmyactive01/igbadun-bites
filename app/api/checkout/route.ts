@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { CURRENCY, initializeTransaction } from "@/lib/paystack";
+import { siteOrigin } from "@/lib/site-origin";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 
@@ -143,7 +144,7 @@ export async function POST(request: NextRequest) {
     email: user.email,
     totalPence,
     reference,
-    callbackUrl: `${request.nextUrl.origin}/checkout/verify`,
+    callbackUrl: `${siteOrigin(request)}/checkout/verify`,
     metadata: { order_id: order.id, fulfilment },
   });
 
