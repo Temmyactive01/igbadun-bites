@@ -46,7 +46,7 @@ export default function SignInButton({ label = "Sign in", next, className = "" }
       type="button"
       onClick={signIn}
       disabled={loading}
-      className={`press inline-flex items-center gap-2.5 rounded-full border border-brown/25 bg-cream px-5 py-2 text-sm font-medium hover:border-brown hover:bg-brown hover:text-cream disabled:cursor-wait disabled:opacity-70 ${className}`}
+      className={`press inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-brown/25 bg-cream px-3.5 py-2 text-sm font-medium sm:gap-2.5 sm:px-5 hover:border-brown hover:bg-brown hover:text-cream disabled:cursor-wait disabled:opacity-70 ${className}`}
     >
       <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white">
         <GoogleMark />

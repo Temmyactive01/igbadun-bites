@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { CONTACT } from "@/lib/contact";
 import { AdireTexture } from "./Textures";
 
@@ -59,7 +60,15 @@ export default function SiteFooter() {
 
         <div className="mt-12 flex flex-col gap-4 border-t border-cream/15 pt-6 text-sm text-cream/60 sm:flex-row sm:justify-between">
           <p>More coming soon: About us · Party catering · Gifts &amp; event packs · FAQs · Policies</p>
-          <p>Instagram · TikTok · Facebook — coming soon</p>
+          <p>
+            Instagram · TikTok · Facebook — coming soon
+            <span className="mx-2 text-cream/30" aria-hidden>
+              |
+            </span>
+            <Link href="/privacy" className="underline decoration-cream/30 underline-offset-4 transition duration-200 ease-brand hover:text-cream hover:decoration-gold">
+              Privacy
+            </Link>
+          </p>
         </div>
       </div>
     </footer>
