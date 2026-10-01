@@ -1,0 +1,134 @@
+@import "tailwindcss";
+
+/*
+  Igbadun Bites brand theme (from style.md).
+  Working palette until the business owner sends exact brand hex codes.
+  Usage in Tailwind: bg-cream, text-brown, bg-gold, text-forest, bg-terracotta, etc.
+*/
+@theme {
+  --color-cream: #faf3e7;
+  --color-cream-deep: #f1e4cc;
+  --color-brown: #3b2416;
+  --color-brown-soft: #6b4a36;
+  --color-gold: #c9972d;
+  --color-gold-dark: #a87b1f;
+  --color-forest: #2f4a32;
+  --color-terracotta: #b5542a;
+
+  --font-heading: var(--font-fraunces), Georgia, serif;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+
+  /* Warm, brown-tinted shadows — never pure gray */
+  --shadow-warm: 0 2px 6px rgb(59 36 22 / 0.08), 0 8px 24px rgb(59 36 22 / 0.08);
+  --shadow-warm-lg: 0 4px 12px rgb(59 36 22 / 0.1), 0 20px 48px rgb(59 36 22 / 0.14);
+
+  --ease-brand: cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+body {
+  background: var(--color-cream);
+  color: var(--color-brown);
+  font-family: var(--font-sans);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-heading);
+}
+
+/* Big display type: high optical size + a touch of softness for a warm, crafted feel */
+.display {
+  font-variation-settings: "opsz" 144, "SOFT" 60;
+  letter-spacing: -0.035em;
+  line-height: 0.92;
+}
+
+/* ---------- Background textures ---------- */
+
+/* Warm editorial grid: thin brown lines on cream, fading out at the edges */
+.texture-grid {
+  background-image:
+    linear-gradient(to right, rgb(59 36 22 / 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(59 36 22 / 0.07) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 80% 70% at 30% 40%, black 30%, transparent 85%);
+}
+
+/* ---------- Motion ---------- */
+
+/* Scroll reveal — only hides content when JS is running (see layout.tsx) */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 700ms var(--ease-brand),
+    transform 700ms var(--ease-brand);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.js .reveal[data-visible="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Divider diamonds: stagger in on load, then a slow shimmer wave travels along them */
+@keyframes diamond-in {
+  from {
+    opacity: 0;
+    transform: scale(0.4) rotate(-45deg);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes diamond-shimmer {
+  0%,
+  80%,
+  100% {
+    fill-opacity: 0;
+  }
+  88% {
+    fill-opacity: 0.9;
+  }
+}
+.diamond {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: diamond-in 500ms var(--ease-brand) both;
+  animation-delay: calc(var(--i) * 70ms + 300ms);
+}
+.diamond-core {
+  animation: diamond-shimmer 5s ease-in-out infinite;
+  animation-delay: calc(var(--i) * 120ms + 1.5s);
+}
+
+/* Shared press state for every button-like element */
+.press {
+  transition:
+    transform 150ms var(--ease-brand),
+    background-color 200ms var(--ease-brand),
+    color 200ms var(--ease-brand),
+    border-color 200ms var(--ease-brand),
+    box-shadow 200ms var(--ease-brand);
+}
+.press:active {
+  transform: scale(0.96);
+}
+.press:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .diamond,
+  .diamond-core {
+    animation: none;
+  }
+}
