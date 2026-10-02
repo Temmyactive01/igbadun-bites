@@ -74,9 +74,10 @@ submitted state).
 2. Product discovery (category chapters, featured product, rails, chapter index)
 3. Product cards + product detail sheet (sensory copy, morphing add-to-basket,
    **ingredients/allergens/storage visible for every product**) — built 2 Oct 2026:
-   add morphs into a − qty + stepper; detail panel per product. All 13 products still
-   hold the "TBC with supplier" placeholders, shown as "not yet confirmed" with an
-   allergy contact line — real data needed before launch
+   add morphs into a − qty + stepper; detail panel per product. All 13 products show
+   **researched typical recipes** (supabase/003_product_details.sql), labelled "not yet
+   confirmed by our supplier", plus the allergy WhatsApp line. **Before real orders the
+   owner must confirm allergens per product** and set details_status = 'confirmed'
    (docs/owner/ingredient-allergen-checklist.md).
 4. Cart, checkout, orders (reskin; same logic)
 5. Footer + final motion/accessibility polish
