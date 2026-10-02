@@ -18,10 +18,12 @@ such (see style.md → Photography). Real product photos go in
 | `plantain-chips-tray.jpg` | Chapter 01 — Chips | Bagged plantain chips on a hawker's tray, Nigeria ("Chips made from plantain") | Daniel Paullll | CC BY-SA 4.0 | https://commons.wikimedia.org/w/index.php?curid=164455454 |
 | `groundnut-roasting.jpg` | Chapter 02 — Crunchy snacks | Woman roasting groundnuts over a coal pot, Nigeria ("Roasting") | Xahrashots1000 | CC BY-SA 4.0 | https://commons.wikimedia.org/w/index.php?curid=146753661 |
 | `coconuts-market.jpg` | Chapter 03 — Treats & sweets | Coconuts at Bakin Dogo Market, Kaduna | Inyor4mr | CC BY-SA 4.0 | https://commons.wikimedia.org/w/index.php?curid=163299511 |
-| `sharing-tray.jpg` | Our story | Sallah meal shared from one tray, Hadejia ("WLA034") | Rukayya Abdullahi | CC0 1.0 | https://commons.wikimedia.org/w/index.php?curid=186629900 |
 | `small-chops.jpg` | Parties, gifts & celebrations | Party tray of small chops ("SmallChops") | Nimah salihu | CC BY-SA 4.0 | https://commons.wikimedia.org/w/index.php?curid=101382787 |
 
 Display changes: resized (max 1920px) and cropped for display. Adaptations of CC BY-SA
 photos are shared under the same licence.
+
+The "Our story" section is text-only (2 Oct 2026): no licensed shared-meal photo was
+both clean (no food near bare ground) and authentically Nigerian.
 
 Hero downloaded 2 October 2026; others replaced 2 October 2026 (Nigerian photo pass).
