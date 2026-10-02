@@ -56,8 +56,8 @@ editorial brand experience — while remaining an excellent, accessible shop.
 Creative direction and tokens: **style.md (v2)**. Full audit, homepage composition,
 motion and responsive plan: **docs/redesign/phase-0-audit.md**.
 
-**Status:** Phase 0 approved 2 Oct 2026. Phase 1 (foundations + homepage) built on the
-`redesign` branch — in review on the Netlify branch preview.
+**Status:** Phase 0 and Phase 1 approved 2 Oct 2026. Phase 2 (product discovery) built on the
+`redesign` branch — in review at https://redesign--igbadun-bites.netlify.app
 
 **Must not break:** Supabase data and RLS, Google sign-in, product data, basket,
 checkout and Paystack verification, confirmation emails, order history. The redesign

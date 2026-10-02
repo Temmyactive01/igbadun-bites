@@ -199,26 +199,6 @@ h4 {
   transform: scale(1.04);
 }
 
-/* Divider diamonds (v1, footer/pages not yet redesigned) */
-@keyframes diamond-in {
-  from { opacity: 0; transform: scale(0.4) rotate(-45deg); }
-  to { opacity: 1; transform: none; }
-}
-@keyframes diamond-shimmer {
-  0%, 80%, 100% { fill-opacity: 0; }
-  88% { fill-opacity: 0.9; }
-}
-.diamond {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: diamond-in 500ms var(--ease-brand) both;
-  animation-delay: calc(var(--i) * 70ms + 300ms);
-}
-.diamond-core {
-  animation: diamond-shimmer 5s ease-in-out infinite;
-  animation-delay: calc(var(--i) * 120ms + 1.5s);
-}
-
 /* Shared press state for every button-like element */
 .press {
   transition:
@@ -241,8 +221,6 @@ h4 {
   .hero-image,
   .hero-line > span,
   .fade-up,
-  .diamond,
-  .diamond-core,
   .animate-bump {
     animation: none;
   }
