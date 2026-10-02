@@ -79,7 +79,10 @@ submitted state).
    confirmed by our supplier", plus the allergy WhatsApp line. **Before real orders the
    owner must confirm allergens per product** and set details_status = 'confirmed'
    (docs/owner/ingredient-allergen-checklist.md).
-4. Cart, checkout, orders (reskin; same logic)
+4. Cart, checkout, orders (reskin; same logic) — built 2 Oct 2026: basket as bottom
+   sheet (phones) / side panel, sticky phone basket bar, checkout / confirmation /
+   order history on the v2 system; Supabase queries, /api/checkout, Paystack and
+   order emails unchanged
 5. Footer + final motion/accessibility polish
 
 **New requirements introduced by the redesign:**

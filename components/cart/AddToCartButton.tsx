@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { cart, MAX_QUANTITY, useCart, type CartItem } from "@/lib/cart-store";
+import { cart, useCart, type CartItem } from "@/lib/cart-store";
+import QuantityStepper from "./QuantityStepper";
 
 type Props = {
   item: Omit<CartItem, "quantity">;
@@ -78,32 +79,16 @@ export default function AddToCartButton({ item, soldOut = false, variant = "tile
     );
   }
 
-  const step = `press flex ${feature ? "h-14 w-14 text-xl" : "h-11 w-11 text-lg"} items-center justify-center rounded-full hover:bg-oat/15 disabled:opacity-35 disabled:hover:bg-transparent`;
-
   return (
     <>
-      <div
-        role="group"
-        aria-label={`${item.name} in basket`}
-        className={`morph-in inline-flex ${height} items-center rounded-full bg-cocoa text-oat`}
-      >
-        <button type="button" onClick={() => change(quantity - 1)} className={step} aria-label={quantity === 1 ? `Remove ${item.name} from basket` : `One fewer ${item.name}`}>
-          <span aria-hidden>−</span>
-        </button>
-        <span className={`${feature ? "min-w-10 text-lg" : "min-w-7"} text-center font-semibold tabular-nums`} aria-hidden>
-          {quantity}
-        </span>
-        <button
-          ref={plusRef}
-          type="button"
-          onClick={() => change(quantity + 1)}
-          disabled={quantity >= MAX_QUANTITY}
-          className={step}
-          aria-label={quantity >= MAX_QUANTITY ? `Maximum of ${MAX_QUANTITY} ${item.name}` : `One more ${item.name} (${quantity} in basket)`}
-        >
-          <span aria-hidden>+</span>
-        </button>
-      </div>
+      <QuantityStepper
+        name={item.name}
+        quantity={quantity}
+        onChange={change}
+        size={feature ? "lg" : "md"}
+        plusRef={plusRef}
+        className="morph-in"
+      />
       {live}
     </>
   );

@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ClearBasket from "@/components/checkout/ClearBasket";
+import OrderLines from "@/components/orders/OrderLines";
+import PageIntro from "@/components/ui/PageIntro";
+import { buttonMd, buttonPrimary, panel, textLink } from "@/components/ui/styles";
 import { formatPence } from "@/lib/money";
 import { DEMO_NGN_PER_GBP } from "@/lib/payment-config";
 import { CONTACT } from "@/lib/contact";
@@ -45,86 +48,86 @@ export default async function OrderSuccessPage({ searchParams }: PageProps<"/che
   return (
     <main className="flex-1">
       {paid && <ClearBasket />}
-      <div className="mx-auto max-w-3xl px-4 py-14 sm:px-8 sm:py-20">
-        <p className="text-xs font-semibold uppercase tracking-[0.28em] text-forest">Order {shortRef}</p>
-
-        {paid ? (
-          <>
-            <h1 className="display mt-4 text-[clamp(2.5rem,7vw,5rem)] font-bold">
-              Thank you{firstName ? `, ${firstName}` : ""}. <em className="font-semibold text-terracotta">It&rsquo;s on its way.</em>
-            </h1>
-            <p className="mt-5 text-lg text-brown-soft">
-              Your payment went through. A confirmation is heading to{" "}
-              <span className="font-medium text-brown">{order.customer_email}</span>.{" "}
-              {order.fulfilment === "pickup"
-                ? "We’ll be in touch shortly with your pickup details."
-                : "We’ll be in touch shortly to confirm your delivery fee and time."}
-            </p>
-          </>
-        ) : order.status === "pending" ? (
-          <>
-            <h1 className="display mt-4 text-[clamp(2.5rem,7vw,4.5rem)] font-bold">Just confirming your payment…</h1>
-            <p className="mt-5 text-lg text-brown-soft">
-              Paystack hasn&rsquo;t confirmed this payment yet. This usually takes a few seconds — please refresh this page.
-              If you weren&rsquo;t charged, you can go back to your basket and try again.
-            </p>
-          </>
-        ) : (
-          <>
-            <h1 className="display mt-4 text-[clamp(2.5rem,7vw,4.5rem)] font-bold">This payment didn&rsquo;t go through.</h1>
-            <p className="mt-5 text-lg text-brown-soft">You haven&rsquo;t been charged. Your basket is still saved — please try again.</p>
-          </>
-        )}
-
-        <div className="mt-10 rounded-[1.75rem] bg-cream p-6 shadow-warm ring-1 ring-brown/5 sm:p-8">
-          <h2 className="font-heading text-2xl font-semibold">Order summary</h2>
-          <ul className="mt-4 divide-y divide-brown/10">
-            {order.order_items.map((item, i) => (
-              <li key={i} className="flex justify-between gap-4 py-3">
-                <span>
-                  <span className="font-medium">{item.products?.name ?? "Snack"}</span>
-                  <span className="block text-sm text-brown-soft">
-                    {item.quantity} × {formatPence(Math.round(Number(item.unit_price_gbp) * 100))}
-                    {item.products?.pack_size ? ` · ${item.products.pack_size}` : ""}
-                  </span>
-                </span>
-                <span className="font-medium tabular-nums">
-                  {formatPence(Math.round(Number(item.unit_price_gbp) * 100) * item.quantity)}
-                </span>
-              </li>
-            ))}
-          </ul>
-          <div className="mt-4 flex items-baseline justify-between border-t border-brown/10 pt-4">
-            <span className="font-semibold">{paid ? "Paid" : "Total"}</span>
-            <span className="font-heading text-2xl font-bold tabular-nums">
-              {formatPence(Math.round(Number(order.total_gbp) * 100))}
-            </span>
-          </div>
-          {order.currency === "NGN" && (
-            <p className="mt-2 text-right text-xs text-brown-soft">
-              {`Test payment charged as ₦${(Number(order.total_gbp) * DEMO_NGN_PER_GBP).toLocaleString("en-GB")} (demo rate £1 = ₦${DEMO_NGN_PER_GBP.toLocaleString("en-GB")})`}
-            </p>
+      <div className="mx-auto max-w-[1440px] px-4 py-[clamp(3.5rem,2rem+5vw,7rem)] sm:px-8 lg:px-12">
+        <div className="max-w-3xl">
+          {paid ? (
+            <>
+              <PageIntro eyebrow={`Order ${shortRef}`}>
+                Thank you{firstName ? `, ${firstName}` : ""}. <em>It&rsquo;s on its way.</em>
+              </PageIntro>
+              <p className="text-body-l mt-8 max-w-2xl text-cocoa-soft">
+                Your payment went through. A confirmation is heading to{" "}
+                <span className="font-medium text-cocoa">{order.customer_email}</span>.{" "}
+                {order.fulfilment === "pickup"
+                  ? "We’ll be in touch shortly with your pickup details."
+                  : "We’ll be in touch shortly to confirm your delivery fee and time."}
+              </p>
+            </>
+          ) : order.status === "pending" ? (
+            <>
+              <PageIntro eyebrow={`Order ${shortRef}`}>Just confirming your payment…</PageIntro>
+              <p className="text-body-l mt-8 max-w-2xl text-cocoa-soft">
+                Paystack hasn&rsquo;t confirmed this payment yet. This usually takes a few seconds — please refresh this
+                page. If you weren&rsquo;t charged, you can go back to your basket and try again.
+              </p>
+            </>
+          ) : (
+            <>
+              <PageIntro eyebrow={`Order ${shortRef}`}>This payment didn&rsquo;t go through.</PageIntro>
+              <p className="text-body-l mt-8 max-w-2xl text-cocoa-soft">
+                You haven&rsquo;t been charged. Your basket is still saved — please try again.
+              </p>
+            </>
           )}
-          <p className="mt-4 text-sm text-brown-soft">
-            {order.fulfilment === "pickup"
-              ? "Pickup — we’ll message you with the details."
-              : `Delivery to ${[order.address_line1, order.city, order.postcode].filter(Boolean).join(", ")}`}
-          </p>
-        </div>
 
-        <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
-          <Link
-            href={paid ? "/#shop" : "/checkout"}
-            className="press inline-flex justify-center rounded-full bg-gold px-6 py-3 font-semibold text-brown hover:bg-brown hover:text-cream"
-          >
-            {paid ? "Back to the shop" : "Back to checkout"}
-          </Link>
-          <p className="text-sm text-brown-soft">
-            Questions?{" "}
-            <a href={CONTACT.whatsappHref} target="_blank" rel="noopener noreferrer" className="font-medium text-brown underline decoration-gold/60 underline-offset-4">
-              Message us on WhatsApp
-            </a>
-          </p>
+          <section aria-labelledby="summary-title" className={`${panel} mt-12 p-6 sm:p-8`}>
+            <h2 id="summary-title" className="text-title serif-editorial">
+              Order summary
+            </h2>
+            <OrderLines
+              className="mt-3"
+              lines={order.order_items.map((item) => ({
+                name: item.products?.name ?? "Snack",
+                packSize: item.products?.pack_size,
+                quantity: item.quantity,
+                unitPence: Math.round(Number(item.unit_price_gbp) * 100),
+              }))}
+            />
+            <div className="flex items-baseline justify-between border-t border-cocoa/10 pt-4">
+              <span className="text-eyebrow text-cocoa">{paid ? "Paid" : "Total"}</span>
+              <span className="font-heading text-3xl tabular-nums">
+                {formatPence(Math.round(Number(order.total_gbp) * 100))}
+              </span>
+            </div>
+            {order.currency === "NGN" && (
+              <p className="mt-2 text-right text-xs text-cocoa-soft">
+                {`Test payment charged as ₦${(Number(order.total_gbp) * DEMO_NGN_PER_GBP).toLocaleString("en-GB")} (demo rate £1 = ₦${DEMO_NGN_PER_GBP.toLocaleString("en-GB")})`}
+              </p>
+            )}
+            <p className="mt-5 border-t border-cocoa/10 pt-4 text-sm text-cocoa-soft">
+              {order.fulfilment === "pickup"
+                ? "Pickup — we’ll message you with the details."
+                : `Delivery to ${[order.address_line1, order.city, order.postcode].filter(Boolean).join(", ")}`}
+            </p>
+          </section>
+
+          <div className="mt-10 flex flex-col gap-5 sm:flex-row sm:items-center sm:gap-8">
+            <Link href={paid ? "/#shop" : "/checkout"} className={`${buttonPrimary} ${buttonMd}`}>
+              {paid ? "Back to the shop" : "Back to checkout"}
+            </Link>
+            {paid && (
+              <Link href="/orders" className={textLink}>
+                See my orders
+              </Link>
+            )}
+            <p className="text-sm text-cocoa-soft">
+              Questions?{" "}
+              <a href={CONTACT.whatsappHref} target="_blank" rel="noopener noreferrer" className={textLink}>
+                Message us on WhatsApp
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     </main>

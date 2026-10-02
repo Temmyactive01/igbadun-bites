@@ -1,5 +1,8 @@
 import Link from "next/link";
+import OrderLines from "@/components/orders/OrderLines";
 import SignInButton from "@/components/SignInButton";
+import PageIntro from "@/components/ui/PageIntro";
+import { buttonMd, buttonPrimary, notice, panel, textLink } from "@/components/ui/styles";
 import { CONTACT } from "@/lib/contact";
 import { formatPence } from "@/lib/money";
 import { createClient } from "@/lib/supabase/server";
@@ -36,13 +39,16 @@ export default async function OrdersPage() {
   if (!user) {
     return (
       <main className="flex-1">
-        <div className="mx-auto max-w-3xl px-4 py-14 sm:px-8 sm:py-20">
-          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-forest">My orders</p>
-          <h1 className="display mt-4 text-[clamp(2.5rem,7vw,4.25rem)] font-bold">Your snack history.</h1>
-          <div className="mt-10 max-w-lg rounded-[1.75rem] bg-cream p-8 shadow-warm ring-1 ring-brown/5">
-            <h2 className="text-2xl font-semibold">Sign in to see your orders</h2>
-            <p className="mt-2 text-brown-soft">Use the same Google account you ordered with.</p>
-            <SignInButton label="Continue with Google" next="/orders" className="mt-6" />
+        <div className="mx-auto max-w-[1440px] px-4 py-[clamp(3.5rem,2rem+5vw,7rem)] sm:px-8 lg:px-12">
+          <div className="max-w-3xl">
+            <PageIntro eyebrow="My orders">
+              Your snack <em>history.</em>
+            </PageIntro>
+            <div className="mt-12 max-w-lg border-t border-cocoa/15 pt-8">
+              <h2 className="text-title serif-editorial">Sign in to see your orders</h2>
+              <p className="mt-3 text-cocoa-soft">Use the same Google account you ordered with.</p>
+              <SignInButton label="Continue with Google" next="/orders" className="mt-8" />
+            </div>
           </div>
         </div>
       </main>
@@ -64,100 +70,90 @@ export default async function OrdersPage() {
 
   return (
     <main className="flex-1">
-      <div className="mx-auto max-w-3xl px-4 py-14 sm:px-8 sm:py-20">
-        <p className="text-xs font-semibold uppercase tracking-[0.28em] text-forest">My orders</p>
-        <h1 className="display mt-4 text-[clamp(2.5rem,7vw,4.25rem)] font-bold">
-          Your snack <em className="font-semibold text-terracotta">history.</em>
-        </h1>
+      <div className="mx-auto max-w-[1440px] px-4 py-[clamp(3.5rem,2rem+5vw,7rem)] sm:px-8 lg:px-12">
+        <div className="max-w-3xl">
+          <PageIntro eyebrow="My orders">
+            Your snack <em>history.</em>
+          </PageIntro>
 
-        {error ? (
-          <p role="alert" className="mt-10 rounded-2xl border border-terracotta/30 bg-terracotta/10 px-5 py-4">
-            We couldn&rsquo;t load your orders just now — please refresh in a moment.
-          </p>
-        ) : orders.length === 0 ? (
-          <div className="mt-10 max-w-lg rounded-[1.75rem] bg-cream p-8 shadow-warm ring-1 ring-brown/5">
-            <h2 className="text-2xl font-semibold">No orders yet.</h2>
-            <p className="mt-2 text-brown-soft">When you place an order, it&rsquo;ll appear here.</p>
-            <Link
-              href="/#shop"
-              className="press mt-6 inline-flex rounded-full bg-gold px-6 py-3 font-semibold text-brown hover:bg-brown hover:text-cream"
-            >
-              Browse the snacks
-            </Link>
-          </div>
-        ) : (
-          <>
-            <p className="mt-5 text-brown-soft">
-              {orders.length} {orders.length === 1 ? "order" : "orders"} · newest first
+          {error ? (
+            <p role="alert" className={`${notice} mt-12`}>
+              We couldn&rsquo;t load your orders just now — please refresh in a moment.
             </p>
-            <ul className="mt-8 space-y-6">
-              {orders.map((order) => (
-                <li key={order.id}>
-                  <article className="rounded-[1.75rem] bg-cream p-6 shadow-warm ring-1 ring-brown/5 sm:p-8">
-                    <div className="flex flex-wrap items-start justify-between gap-3">
-                      <div>
-                        <h2 className="font-heading text-xl font-semibold">
-                          Order {order.id.slice(0, 8).toUpperCase()}
-                        </h2>
-                        <p className="mt-0.5 text-sm text-brown-soft">
-                          <time dateTime={order.paid_at ?? order.created_at}>
-                            {dateFormat.format(new Date(order.paid_at ?? order.created_at))}
-                          </time>
+          ) : orders.length === 0 ? (
+            <div className="mt-12 max-w-lg border-t border-cocoa/15 pt-8">
+              <h2 className="text-title serif-editorial">No orders yet.</h2>
+              <p className="mt-3 text-cocoa-soft">When you place an order, it&rsquo;ll appear here.</p>
+              <Link href="/#shop" className={`${buttonPrimary} ${buttonMd} mt-8`}>
+                Browse the snacks
+              </Link>
+            </div>
+          ) : (
+            <>
+              <p className="text-body-l mt-8 text-cocoa-soft">
+                {orders.length} {orders.length === 1 ? "order" : "orders"} · newest first
+              </p>
+              <ul className="mt-10 space-y-8">
+                {orders.map((order) => (
+                  <li key={order.id}>
+                    <article aria-labelledby={`order-${order.id}`} className={`${panel} p-6 sm:p-8`}>
+                      <div className="flex flex-wrap items-start justify-between gap-3">
+                        <div>
+                          <h2 id={`order-${order.id}`} className="text-title serif-editorial">
+                            Order {order.id.slice(0, 8).toUpperCase()}
+                          </h2>
+                          <p className="mt-1 text-sm text-cocoa-soft">
+                            <time dateTime={order.paid_at ?? order.created_at}>
+                              {dateFormat.format(new Date(order.paid_at ?? order.created_at))}
+                            </time>
+                          </p>
+                        </div>
+                        <p className="flex items-center gap-3 text-eyebrow">
+                          <span className="flex items-center gap-1.5 text-leaf">
+                            <span className="h-1.5 w-1.5 rounded-full bg-leaf" aria-hidden />
+                            Paid
+                          </span>
+                          <span className="text-cocoa-soft">
+                            {order.fulfilment === "pickup" ? "Pickup" : "Delivery"}
+                          </span>
                         </p>
                       </div>
-                      <div className="flex gap-2">
-                        <span className="rounded-full bg-forest px-3 py-1 text-xs font-semibold uppercase tracking-wider text-cream">
-                          Paid
+
+                      <OrderLines
+                        className="mt-4 border-t border-cocoa/10"
+                        lines={order.order_items.map((item) => ({
+                          name: item.products?.name ?? "Snack",
+                          packSize: item.products?.pack_size,
+                          quantity: item.quantity,
+                          unitPence: pence(item.unit_price_gbp),
+                        }))}
+                      />
+
+                      <div className="flex items-baseline justify-between border-t border-cocoa/10 pt-4">
+                        <span className="text-sm text-cocoa-soft">
+                          {order.fulfilment === "delivery" && order.postcode
+                            ? `Delivery to ${order.postcode}`
+                            : "Total"}
                         </span>
-                        <span className="rounded-full border border-brown/20 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-brown-soft">
-                          {order.fulfilment === "pickup" ? "Pickup" : "Delivery"}
+                        <span className="font-heading text-2xl tabular-nums">
+                          {formatPence(pence(order.total_gbp))}
                         </span>
                       </div>
-                    </div>
+                    </article>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
 
-                    <ul className="mt-5 divide-y divide-brown/10 border-t border-brown/10">
-                      {order.order_items.map((item, i) => (
-                        <li key={i} className="flex justify-between gap-4 py-3">
-                          <span>
-                            <span className="font-medium">{item.products?.name ?? "Snack"}</span>
-                            <span className="block text-sm text-brown-soft">
-                              {item.quantity} × {formatPence(pence(item.unit_price_gbp))}
-                              {item.products?.pack_size ? ` · ${item.products.pack_size}` : ""}
-                            </span>
-                          </span>
-                          <span className="font-medium tabular-nums">
-                            {formatPence(pence(item.unit_price_gbp) * item.quantity)}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-
-                    <div className="flex items-baseline justify-between border-t border-brown/10 pt-4">
-                      <span className="text-sm text-brown-soft">
-                        {order.fulfilment === "delivery" && order.postcode ? `Delivery to ${order.postcode}` : "Total"}
-                      </span>
-                      <span className="font-heading text-2xl font-bold tabular-nums">
-                        {formatPence(pence(order.total_gbp))}
-                      </span>
-                    </div>
-                  </article>
-                </li>
-              ))}
-            </ul>
-          </>
-        )}
-
-        <p className="mt-10 text-sm text-brown-soft">
-          Question about an order?{" "}
-          <a
-            href={CONTACT.whatsappHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-medium text-brown underline decoration-gold/60 underline-offset-4"
-          >
-            Message us on WhatsApp
-          </a>
-        </p>
+          <p className="mt-12 text-sm text-cocoa-soft">
+            Question about an order?{" "}
+            <a href={CONTACT.whatsappHref} target="_blank" rel="noopener noreferrer" className={textLink}>
+              Message us on WhatsApp
+              <span className="sr-only"> (opens in a new tab)</span>
+            </a>
+          </p>
+        </div>
       </div>
     </main>
   );
