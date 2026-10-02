@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Reveal from "@/components/Reveal";
-import giftImage from "@/public/images/editorial/gift-wrapped.jpg";
+import partyImage from "@/public/images/editorial/small-chops.jpg";
 import { CONTACT } from "@/lib/contact";
 
 // Custom snack packs (a confirmed service) — image-led, with a direct WhatsApp route.
@@ -36,8 +36,8 @@ export default function Occasions() {
         <Reveal delay={80} className="lg:col-span-5 lg:col-start-8">
           <figure className="zoom-frame relative aspect-[4/5] rounded-[4px] lg:-mr-12 lg:aspect-[5/6]">
             <Image
-              src={giftImage}
-              alt="A gift wrapped in brown paper and tied with twine"
+              src={partyImage}
+              alt="A party tray of small chops — puff puff, samosas and spring rolls"
               fill
               sizes="(min-width: 1024px) 40vw, 100vw"
               placeholder="blur"

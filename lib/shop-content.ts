@@ -1,7 +1,7 @@
 import type { StaticImageData } from "next/image";
-import coconutImage from "@/public/images/editorial/coconut-halves.jpg";
-import peanutsImage from "@/public/images/editorial/peanuts-in-shell.jpg";
-import plantainsImage from "@/public/images/editorial/plantains.jpg";
+import coconutImage from "@/public/images/editorial/coconuts-market.jpg";
+import groundnutImage from "@/public/images/editorial/groundnut-roasting.jpg";
+import plantainChipsImage from "@/public/images/editorial/plantain-chips-tray.jpg";
 
 // Editorial content for the shop's category "chapters" (docs/redesign/brand-copy.md).
 // Keyed by the category name stored in Supabase. A category without an entry
@@ -22,7 +22,7 @@ export const CHAPTERS: Record<string, ChapterContent> = {
     shortTitle: "Chips",
     kicker: "Golden, thin and loud.",
     body: "Plantain and cocoyam chips with that unmistakable snap — the bag that never makes it home unopened.",
-    image: { src: plantainsImage, alt: "Green and ripe plantains", caption: "Plantains, before they become chips" },
+    image: { src: plantainChipsImage, alt: "Plantain chips in small clear bags, fanned out on a hawker’s tray", caption: "Plantain chips, bagged up on a hawker’s tray" },
     tint: "#ead7ae", // plantain wash
   },
   "Crunchy snacks": {
@@ -30,7 +30,7 @@ export const CHAPTERS: Record<string, ChapterContent> = {
     shortTitle: "Crunchy",
     kicker: "The sound of every party tray.",
     body: "Chin chin, kokoro, akara, gurundi and groundnuts — for long journeys, late conversations and “just one more handful”.",
-    image: { src: peanutsImage, alt: "Groundnuts in their shells", caption: "Groundnuts, still in their shells" },
+    image: { src: groundnutImage, alt: "A woman roasting groundnuts in a pan over a coal pot", caption: "Groundnuts roasting over a coal pot" },
     tint: "#e3d3ba", // groundnut
   },
   "Traditional treats and sweets": {
@@ -38,7 +38,7 @@ export const CHAPTERS: Record<string, ChapterContent> = {
     shortTitle: "Treats",
     kicker: "The sweets you saved for later.",
     body: "Coconut candy, baba dudu, condensed milk sweets and more — the ones you counted out in your palm and made last all afternoon.",
-    image: { src: coconutImage, alt: "A coconut split in half", caption: "Fresh coconut" },
+    image: { src: coconutImage, alt: "Coconuts piled on a wooden market stall", caption: "Coconuts at Bakin Dogo Market, Kaduna" },
     tint: "#ebd2c2", // terracotta wash
   },
 };

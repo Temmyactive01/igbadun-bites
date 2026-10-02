@@ -5,9 +5,10 @@ import coconutCandy from "@/public/images/stand-in/coconut-candy.jpg";
 import cocoyamChips from "@/public/images/stand-in/cocoyam-chips.jpg";
 import condensedMilk from "@/public/images/stand-in/condensed-milk-sweet.jpg";
 import dankwa from "@/public/images/stand-in/dankwa.jpg";
+import flakesChinChin from "@/public/images/stand-in/flakes-chin-chin.jpg";
 import gurundi from "@/public/images/stand-in/gurundi.jpg";
 import kokoro from "@/public/images/stand-in/kokoro-egba.jpg";
-import chinChin from "@/public/images/stand-in/milky-chin-chin.jpg";
+import milkyChinChin from "@/public/images/stand-in/milky-chin-chin.jpg";
 import peanuts from "@/public/images/stand-in/peanuts.jpg";
 import plantainChips from "@/public/images/stand-in/plantain-chips.jpg";
 import sisiPelebe from "@/public/images/stand-in/sisi-pelebe.jpg";
@@ -16,9 +17,11 @@ import sisiPelebe from "@/public/images/stand-in/sisi-pelebe.jpg";
 // (public/images/products/ always wins — see docs/content-guide.md).
 //
 // Decision (2 Oct 2026, owner/business): show generic photos of each snack so tiles
-// are recognisable. Rules: licensed for commercial use only (never copied from other
-// sites), no visible brands/labels, credited publicly on /credits, and the shop says
-// these are stand-ins, not our own product.
+// are recognisable. Photo direction (2 Oct 2026, client): prefer photos taken in
+// Nigeria / West Africa — market stalls, hawkers' trays, home kitchens — over generic
+// studio shots, wherever an accurate one exists. Rules: licensed for commercial use
+// only (never copied from other sites), no visible brands/labels, credited publicly
+// on /credits, and the shop says these are stand-ins, not our own product.
 //
 // kind "snack": a generic photo of that snack · kind "ingredient": no licensed snack
 // photo could be found, so an ingredient photo stands in.
@@ -37,16 +40,17 @@ const CC0 = { license: "CC0 1.0 (public domain)", licenseUrl: "https://creativec
 const BY_SA_4 = { license: "CC BY-SA 4.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/" };
 const PEXELS = { license: "Pexels License", licenseUrl: "https://www.pexels.com/license/" };
 
-const chinChinCredit = { title: "Bowl of chin-chin", author: "Kaldari", ...CC0, source: "https://commons.wikimedia.org/w/index.php?curid=37317796" };
+const NOT_NIGERIAN = "Not photographed in Nigeria — no licensed Nigerian photo of this snack was found.";
 
 export const STAND_IN_IMAGES: Record<string, StandIn> = {
   "cocoyam-chips": {
     src: cocoyamChips, kind: "snack", shows: "cocoyam (taro) chips",
+    check: NOT_NIGERIAN,
     credit: { title: "Taro chips", author: "Fumikas Sagisavas", ...CC0, source: "https://commons.wikimedia.org/w/index.php?curid=151780193" },
   },
   "plantain-chips": {
-    src: plantainChips, kind: "snack", shows: "plantain chips",
-    credit: { title: "PLANTAIN CHIPS", author: "DromoTetteh", ...BY_SA_4, source: "https://commons.wikimedia.org/w/index.php?curid=36853980" },
+    src: plantainChips, kind: "snack", shows: "plantain chips (ipekere) in a market basin", position: "50% 60%",
+    credit: { title: "Ipekere", author: "Bibiire1", ...BY_SA_4, source: "https://commons.wikimedia.org/w/index.php?curid=115812555" },
   },
   "akara-ogbomosho": {
     src: akara, kind: "snack", shows: "crunchy akara",
@@ -57,21 +61,22 @@ export const STAND_IN_IMAGES: Record<string, StandIn> = {
     credit: { title: "Nigerian snack (kokoro)", author: "1qfoodplatter", ...BY_SA_4, source: "https://commons.wikimedia.org/w/index.php?curid=35886524" },
   },
   "milky-chin-chin": {
-    src: chinChin, kind: "snack", shows: "chin chin", position: "45% 50%", credit: chinChinCredit,
+    src: milkyChinChin, kind: "snack", shows: "freshly fried chin chin in a basket",
+    credit: { title: "A fried chin chin", author: "Linason Blessing", ...BY_SA_4, source: "https://commons.wikimedia.org/w/index.php?curid=104623113" },
   },
   "flakes-chin-chin": {
-    src: chinChin, kind: "snack", shows: "chin chin", position: "80% 30%",
-    check: "Shows regular chin chin, not the flaked style — no licensed photo of flakes chin chin was found.",
-    credit: chinChinCredit,
+    src: flakesChinChin, kind: "snack", shows: "chin chin crunch (flaked style)", position: "50% 55%",
+    check: "Photo is titled “chin-chin crunch”; confirm it looks like your flakes chin chin.",
+    credit: { title: "Chin-chin crunch", author: "Salma kyari", ...CC0, source: "https://commons.wikimedia.org/w/index.php?curid=173972964" },
   },
   gurundi: {
     src: gurundi, kind: "snack", shows: "coconut biscuits",
-    check: "Assumes gurundi is a coconut biscuit; the current description says “bean snack”.",
+    check: `Assumes gurundi is a coconut biscuit; the current description says “bean snack”. ${NOT_NIGERIAN}`,
     credit: { title: "Coconut biscuits", author: "Gaurav Dhwaj Khadka", ...BY_SA_4, source: "https://commons.wikimedia.org/w/index.php?curid=77074309" },
   },
   peanuts: {
-    src: peanuts, kind: "snack", shows: "roasted groundnuts",
-    credit: { title: "A photo of roasted peanut", author: "Thamizhpparithi Maari", license: "CC BY-SA 3.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0/", source: "https://commons.wikimedia.org/w/index.php?curid=17908197" },
+    src: peanuts, kind: "snack", shows: "dry-fried groundnuts in a market sack",
+    credit: { title: "Dry groundnut", author: "AgnesAbah", ...CC0, source: "https://commons.wikimedia.org/w/index.php?curid=159376092" },
   },
   "sisi-pelebe": {
     src: sisiPelebe, kind: "ingredient", shows: "dough being rolled",
@@ -84,8 +89,9 @@ export const STAND_IN_IMAGES: Record<string, StandIn> = {
     credit: { title: "Brown sugar crystals", author: "Eva Bronzini", ...PEXELS, source: "https://www.pexels.com/photo/6086210/" },
   },
   "coconut-candy": {
-    src: coconutCandy, kind: "snack", shows: "coconut candy",
-    credit: { title: "Coconut Candy Drying", author: "Vegan Feast Catering", license: "CC BY 2.0", licenseUrl: "https://creativecommons.org/licenses/by/2.0/", source: "https://www.flickr.com/photos/25128194@N02/4491844211" },
+    src: coconutCandy, kind: "snack", shows: "coconut candy balls",
+    check: "Photo is titled “coconut balls (kwakumeti)”, a West African coconut sweet; confirm it is close to your coconut candy.",
+    credit: { title: "Coconut balls (kwakumeti)", author: "Sir Ibee", ...CC0, source: "https://commons.wikimedia.org/w/index.php?curid=145807207" },
   },
   dankwa: {
     src: dankwa, kind: "snack", shows: "dankwa (dakuwa)",
@@ -93,7 +99,8 @@ export const STAND_IN_IMAGES: Record<string, StandIn> = {
     credit: { title: "Dakuwa", author: "Saudarh2", ...CC0, source: "https://commons.wikimedia.org/w/index.php?curid=175611554" },
   },
   "condensed-milk-sweet": {
-    src: condensedMilk, kind: "snack", shows: "milk toffee",
-    credit: { title: "Milk Toffee", author: "Dan arndt", ...BY_SA_4, source: "https://commons.wikimedia.org/w/index.php?curid=128684041" },
+    src: condensedMilk, kind: "snack", shows: "a hawker’s tray of local milk sweets", position: "50% 20%",
+    check: "A tray of Hausa local sweets; the cream-coloured blocks are milk sweets. Confirm they are close to your condensed milk sweet.",
+    credit: { title: "Local hausa sweet", author: "Musa Vacho77", ...BY_SA_4, source: "https://commons.wikimedia.org/w/index.php?curid=100265847" },
   },
 };

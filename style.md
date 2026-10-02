@@ -76,6 +76,11 @@ showcase, a SaaS site, or a Shopify clone. Must **not** sacrifice usability.
   Pexels — never copied from other websites), no visible brands or labels, credited
   publicly on /credits, and the shop states clearly that they are stand-ins. Where no
   licensed snack photo exists, an ingredient photo stands in. Data: lib/stand-in-images.ts.
+- **Photo direction (client, 2 Oct 2026):** authentic Nigerian / West African feel —
+  market stalls, hawkers' trays, groundnuts roasting, food shared from one tray — over
+  generic or export-catalogue studio shots, for stand-ins and atmosphere alike (hero
+  excepted). Wikimedia Commons (Wiki Loves Africa entries by Nigerian photographers) is
+  the best source; avoid identifiable faces where a hands/scene shot works.
 - Warm grade, natural light, tight crops; 4:5 portrait for products, 3:2 / 21:9 for
   editorial.
 

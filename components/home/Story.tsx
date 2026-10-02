@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Reveal from "@/components/Reveal";
-import sharingImage from "@/public/images/editorial/sharing-table.jpg";
+import sharingImage from "@/public/images/editorial/sharing-tray.jpg";
 
 // Editorial brand story on cocoa. Copy is deliberately non-specific: the founder's
 // real story is an open item (prd.md) and is shown as "coming soon" until supplied.
@@ -13,7 +13,7 @@ export default function Story() {
           <figure className="zoom-frame relative aspect-[4/5] rounded-[4px] md:aspect-[5/4] lg:aspect-[4/5]">
             <Image
               src={sharingImage}
-              alt="Hands reaching across a family table to share food"
+              alt="Hands reaching into one shared tray of food, with food flasks all around"
               fill
               sizes="(min-width: 1024px) 45vw, 100vw"
               placeholder="blur"

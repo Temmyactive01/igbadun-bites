@@ -26,7 +26,7 @@ function Credit({ title, author, license, licenseUrl, source }: { title: string;
 }
 
 export default function CreditsPage() {
-  // The two chin chin tiles share one photo; list each source once
+  // List each source once, in case two tiles share a photo
   const productCredits = Object.entries(STAND_IN_IMAGES).filter(
     ([, img], i, all) => all.findIndex(([, other]) => other.credit.source === img.credit.source) === i
   );
