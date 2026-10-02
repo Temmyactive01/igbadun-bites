@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useRef, useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import SignInButton from "@/components/SignInButton";
 import { CONTACT } from "@/lib/contact";
+import { useDialog } from "@/lib/use-dialog";
 
 type Props = { signedIn: boolean; firstName: string; overlay: boolean };
 
@@ -19,24 +20,11 @@ const LINKS = [
 export default function MobileMenu({ signedIn, firstName, overlay }: Props) {
   const [open, setOpen] = useState(false);
   const closeRef = useRef<HTMLButtonElement>(null);
-  const triggerRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    if (!open) return;
-    closeRef.current?.focus();
-    const trigger = triggerRef.current;
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
-    document.addEventListener("keydown", onKey);
-    const overflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = overflow;
-      trigger?.focus();
-    };
-  }, [open]);
+  const dialogRef = useRef<HTMLDivElement>(null);
 
   const close = () => setOpen(false);
+  // Escape / focus trap / scroll lock / focus back to the Menu button (lib/use-dialog.ts)
+  useDialog({ open, onClose: close, containerRef: dialogRef, initialFocusRef: closeRef });
   // The sheet is portalled to <body>: the header uses backdrop-filter, which would
   // otherwise trap a "position: fixed" child inside the header bar.
   const isClient = useSyncExternalStore(noop, () => true, () => false);
@@ -44,23 +32,23 @@ export default function MobileMenu({ signedIn, firstName, overlay }: Props) {
   return (
     <>
       <button
-        ref={triggerRef}
         type="button"
         onClick={() => setOpen(true)}
         aria-haspopup="dialog"
         aria-expanded={open}
-        className={`press rounded-full px-2 py-2 text-sm font-medium min-[360px]:px-3 ${overlay ? "text-oat" : "text-cocoa"}`}
+        className={`press min-h-11 rounded-full px-2 text-sm font-medium min-[360px]:px-3 ${overlay ? "text-oat" : "text-cocoa"}`}
       >
         Menu
       </button>
 
       {isClient && createPortal(
       <div
+        ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-label="Menu"
         inert={!open}
-        className={`fixed inset-0 z-50 flex flex-col bg-oat text-cocoa transition-[opacity,translate] duration-500 ease-[var(--ease-out-soft)] ${
+        className={`fixed inset-0 z-50 flex flex-col bg-oat text-cocoa transition-[opacity,translate] duration-500 ease-[var(--ease-out-soft)] motion-reduce:translate-y-0 motion-reduce:duration-200 ${
           open ? "translate-y-0 opacity-100" : "pointer-events-none -translate-y-4 opacity-0"
         }`}
       >
@@ -74,7 +62,7 @@ export default function MobileMenu({ signedIn, firstName, overlay }: Props) {
             ref={closeRef}
             type="button"
             onClick={close}
-            className="press rounded-full px-3 py-2 text-sm font-medium"
+            className="press min-h-11 rounded-full px-4 text-sm font-medium hover:bg-cocoa/5"
           >
             Close
           </button>
@@ -107,7 +95,7 @@ export default function MobileMenu({ signedIn, firstName, overlay }: Props) {
                 Signed in as <span className="font-semibold text-cocoa">{firstName}</span>
               </span>
               <form action="/auth/signout" method="post">
-                <button className="press rounded-full border border-cocoa/25 px-4 py-2 text-sm font-medium">Sign out</button>
+                <button className="press min-h-11 rounded-full border border-cocoa/25 px-5 text-sm font-medium">Sign out</button>
               </form>
             </div>
           ) : (

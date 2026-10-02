@@ -83,7 +83,10 @@ submitted state).
    sheet (phones) / side panel, sticky phone basket bar, checkout / confirmation /
    order history on the v2 system; Supabase queries, /api/checkout, Paystack and
    order emails unchanged
-5. Footer + final motion/accessibility polish
+5. Footer + final motion/accessibility polish — built 2 Oct 2026: closing-composition
+   footer; privacy and sign-in error pages restyled; skip link; shared dialog hook
+   with focus trap (basket, product panel, mobile menu); 44px targets; reduced-motion
+   coverage; axe-core audit clean (0 violations) on every page and dialog state
 
 **New requirements introduced by the redesign:**
 - Product detail view showing description, ingredients, allergens, storage and pack

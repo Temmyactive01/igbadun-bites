@@ -46,7 +46,7 @@ export default async function OrderSuccessPage({ searchParams }: PageProps<"/che
   const shortRef = order.id.slice(0, 8).toUpperCase();
 
   return (
-    <main className="flex-1">
+    <main id="main" className="flex-1">
       {paid && <ClearBasket />}
       <div className="mx-auto max-w-[1440px] px-4 py-[clamp(3.5rem,2rem+5vw,7rem)] sm:px-8 lg:px-12">
         <div className="max-w-3xl">

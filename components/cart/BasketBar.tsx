@@ -16,7 +16,8 @@ export default function BasketBar() {
     <>
       <div aria-hidden className="h-20 md:hidden" />
       <div
-        className={`fixed inset-x-0 bottom-0 z-30 px-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] transition-[translate,opacity] duration-300 ease-brand md:hidden ${
+        inert={open}
+        className={`fixed inset-x-0 bottom-0 z-30 px-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] transition-[translate,opacity] duration-300 ease-brand motion-reduce:transition-none md:hidden ${
           open ? "pointer-events-none translate-y-full opacity-0" : "morph-in"
         }`}
       >

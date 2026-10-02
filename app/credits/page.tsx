@@ -32,7 +32,7 @@ export default function CreditsPage() {
   );
 
   return (
-    <main className="flex-1">
+    <main id="main" className="flex-1">
       <div className="mx-auto max-w-3xl px-4 py-14 sm:px-8 sm:py-20">
         <p className="text-eyebrow text-cocoa-soft">Photo credits</p>
         <h1 className="text-display-l serif-editorial mt-5">With thanks.</h1>

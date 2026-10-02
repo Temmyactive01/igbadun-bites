@@ -5,6 +5,7 @@ import AddToCartButton from "@/components/cart/AddToCartButton";
 import { CONTACT } from "@/lib/contact";
 import { productImageKey } from "@/lib/product-images";
 import { detailText, isConfirmed, productSheet, useProductSheet } from "@/lib/product-sheet";
+import { useDialog } from "@/lib/use-dialog";
 import type { Product } from "@/lib/types";
 import ProductVisual from "./ProductVisual";
 
@@ -22,7 +23,7 @@ type Props = { entries: { product: Product; tint: string }[] };
 export default function ProductSheet({ entries }: Props) {
   const { product, tint, open } = useProductSheet();
   const closeRef = useRef<HTMLButtonElement>(null);
-  const returnFocusTo = useRef<Element | null>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
   const pushedHistory = useRef(false); // did opening the panel add a history entry?
   const [copied, setCopied] = useState(false);
 
@@ -71,20 +72,8 @@ export default function ProductSheet({ entries }: Props) {
     }
   }
 
-  useEffect(() => {
-    if (!open) return;
-    returnFocusTo.current = document.activeElement;
-    closeRef.current?.focus();
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && productSheet.close();
-    document.addEventListener("keydown", onKey);
-    const overflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = overflow;
-      (returnFocusTo.current as HTMLElement | null)?.focus?.();
-    };
-  }, [open]);
+  // Escape / focus trap / scroll lock / focus return (lib/use-dialog.ts)
+  useDialog({ open, onClose: productSheet.close, containerRef: dialogRef, initialFocusRef: closeRef });
 
   const ingredients = detailText(product?.ingredients);
   const allergens = detailText(product?.allergens);
@@ -101,7 +90,8 @@ export default function ProductSheet({ entries }: Props) {
         aria-hidden
       />
 
-      <aside
+      <div
+        ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby="product-sheet-title"
@@ -216,7 +206,7 @@ export default function ProductSheet({ entries }: Props) {
             </div>
           </>
         )}
-      </aside>
+      </div>
     </div>
   );
 }

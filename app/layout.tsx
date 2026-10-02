@@ -39,6 +39,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
       </head>
       <body className="min-h-full flex flex-col">
+        {/* Keyboard users can jump straight past the header (every page's <main> has id="main") */}
+        <a
+          href="#main"
+          className="sr-only rounded-full bg-cocoa px-5 py-3 font-medium text-oat focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60]"
+        >
+          Skip to content
+        </a>
         <SiteHeader />
         {children}
         <SiteFooter />

@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import ItemThumb from "@/components/orders/ItemThumb";
 import { buttonLg, buttonPrimary, buttonSecondary, buttonMd } from "@/components/ui/styles";
 import { cart, formatPence, useCart } from "@/lib/cart-store";
+import { useDialog } from "@/lib/use-dialog";
 import QuantityStepper from "./QuantityStepper";
 
 // The basket (Phase 4 restyle): bottom sheet on phones, side panel from md up — the
@@ -12,24 +13,10 @@ import QuantityStepper from "./QuantityStepper";
 export default function CartDrawer() {
   const { items, open, count, subtotalPence } = useCart();
   const closeRef = useRef<HTMLButtonElement>(null);
-  const returnFocusTo = useRef<Element | null>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
 
-  // While open: Escape closes, page behind doesn't scroll, focus moves into
-  // the drawer and returns to where it was when the drawer closes.
-  useEffect(() => {
-    if (!open) return;
-    returnFocusTo.current = document.activeElement;
-    closeRef.current?.focus();
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && cart.close();
-    document.addEventListener("keydown", onKey);
-    const overflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = overflow;
-      (returnFocusTo.current as HTMLElement | null)?.focus?.();
-    };
-  }, [open]);
+  // Escape / focus trap / scroll lock / focus return (lib/use-dialog.ts)
+  useDialog({ open, onClose: cart.close, containerRef: dialogRef, initialFocusRef: closeRef });
 
   function setQuantity(productId: string, next: number) {
     cart.setQuantity(productId, next);
@@ -45,7 +32,8 @@ export default function CartDrawer() {
         aria-hidden
       />
 
-      <aside
+      <div
+        ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby="basket-title"
@@ -123,7 +111,7 @@ export default function CartDrawer() {
             </div>
           </>
         )}
-      </aside>
+      </div>
     </div>
   );
 }

@@ -8,6 +8,7 @@ type Props = {
   label?: string;
   next?: string; // where to return after signing in (defaults to the current page)
   className?: string;
+  size?: "sm" | "lg"; // sm: header · lg: the main action on checkout / orders / sign-in error pages
 };
 
 function GoogleMark() {
@@ -21,7 +22,7 @@ function GoogleMark() {
   );
 }
 
-export default function SignInButton({ label = "Sign in", next, className = "" }: Props) {
+export default function SignInButton({ label = "Sign in", next, className = "", size = "sm" }: Props) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
@@ -46,7 +47,9 @@ export default function SignInButton({ label = "Sign in", next, className = "" }
       type="button"
       onClick={signIn}
       disabled={loading}
-      className={`press inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-brown/25 bg-cream px-3.5 py-2 text-sm font-medium text-cocoa sm:gap-2.5 sm:px-5 hover:border-brown hover:bg-brown hover:text-cream disabled:cursor-wait disabled:opacity-70 ${className}`}
+      className={`press inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-cocoa/25 bg-oat font-medium text-cocoa sm:gap-2.5 hover:border-cocoa hover:bg-cocoa hover:text-oat disabled:cursor-wait disabled:opacity-70 ${
+        size === "lg" ? "h-12 px-6 text-base" : "px-3.5 py-2 text-sm sm:px-5"
+      } ${className}`}
     >
       <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white">
         <GoogleMark />

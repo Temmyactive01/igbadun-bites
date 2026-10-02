@@ -38,7 +38,7 @@ export default async function OrdersPage() {
 
   if (!user) {
     return (
-      <main className="flex-1">
+      <main id="main" className="flex-1">
         <div className="mx-auto max-w-[1440px] px-4 py-[clamp(3.5rem,2rem+5vw,7rem)] sm:px-8 lg:px-12">
           <div className="max-w-3xl">
             <PageIntro eyebrow="My orders">
@@ -47,7 +47,7 @@ export default async function OrdersPage() {
             <div className="mt-12 max-w-lg border-t border-cocoa/15 pt-8">
               <h2 className="text-title serif-editorial">Sign in to see your orders</h2>
               <p className="mt-3 text-cocoa-soft">Use the same Google account you ordered with.</p>
-              <SignInButton label="Continue with Google" next="/orders" className="mt-8" />
+              <SignInButton size="lg" label="Continue with Google" next="/orders" className="mt-8" />
             </div>
           </div>
         </div>
@@ -69,7 +69,7 @@ export default async function OrdersPage() {
   const orders = (data ?? []) as unknown as OrderRow[];
 
   return (
-    <main className="flex-1">
+    <main id="main" className="flex-1">
       <div className="mx-auto max-w-[1440px] px-4 py-[clamp(3.5rem,2rem+5vw,7rem)] sm:px-8 lg:px-12">
         <div className="max-w-3xl">
           <PageIntro eyebrow="My orders">

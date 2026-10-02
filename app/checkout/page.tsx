@@ -15,7 +15,7 @@ export default async function CheckoutPage({ searchParams }: PageProps<"/checkou
   const meta = (user?.user_metadata ?? {}) as { full_name?: string; name?: string };
 
   return (
-    <main className="flex-1">
+    <main id="main" className="flex-1">
       <div className="mx-auto max-w-[1440px] px-4 py-[clamp(3.5rem,2rem+5vw,7rem)] sm:px-8 lg:px-12">
         <PageIntro eyebrow="Checkout">
           Almost <em>yours.</em>
@@ -36,7 +36,7 @@ export default async function CheckoutPage({ searchParams }: PageProps<"/checkou
               We use your Google account so we can send your order confirmation and keep track of your order. Your basket
               will be right here when you come back.
             </p>
-            <SignInButton label="Continue with Google" next="/checkout" className="mt-8" />
+            <SignInButton size="lg" label="Continue with Google" next="/checkout" className="mt-8" />
           </div>
         )}
       </div>

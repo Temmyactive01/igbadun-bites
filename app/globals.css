@@ -115,11 +115,14 @@ body {
   color: var(--color-cocoa);
 }
 
-h1,
-h2,
-h3,
-h4 {
-  font-family: var(--font-heading);
+/* In the base layer so utilities (e.g. text-eyebrow's sans font) can override it on headings */
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-heading);
+  }
 }
 
 /* v1 display style — still used by pages not yet redesigned */
