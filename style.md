@@ -84,7 +84,7 @@ showcase, a SaaS site, or a Shopify clone. Must **not** sacrifice usability.
 - **Food hygiene read (client, 2 Oct 2026):** never show food or hands near bare ground,
   dirt or the floor — we're a food brand. Market stalls, tables and trays on proper
   surfaces only. If no clean, authentic photo exists, use a type-led layout instead
-  (as "Our story" does) rather than a mediocre photo.
+  rather than a mediocre photo.
 - Warm grade, natural light, tight crops; 4:5 portrait for products, 3:2 / 21:9 for
   editorial.
 
