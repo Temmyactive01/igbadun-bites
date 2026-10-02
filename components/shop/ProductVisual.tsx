@@ -1,6 +1,6 @@
 import Image from "next/image";
-import { INGREDIENT_IMAGES } from "@/lib/ingredient-images";
 import { productImageKey, productImageSrc } from "@/lib/product-images";
+import { STAND_IN_IMAGES } from "@/lib/stand-in-images";
 import type { Product } from "@/lib/types";
 
 type Props = {
@@ -13,12 +13,13 @@ type Props = {
 
 // The image area of a product, in order of preference:
 //   1. the real product photo (public/images/products/)
-//   2. a representative ingredient photo (never a finished snack — style.md → Photography)
+//   2. a licensed stand-in photo (lib/stand-in-images.ts) — a generic photo of the snack,
+//      or an ingredient where none exists; labelled as a stand-in on the page
 //   3. a typographic label, for any new product without either yet
 // Every option uses the same 4:5 crop, subtle radius and warm grade so the grid reads as one.
 export default function ProductVisual({ product, tint, sizes, large = false, preload = false }: Props) {
   const photo = productImageSrc(product.name);
-  const ingredient = photo ? null : INGREDIENT_IMAGES[productImageKey(product.name)];
+  const standIn = photo ? null : STAND_IN_IMAGES[productImageKey(product.name)];
   const soldOut = !product.available;
 
   return (
@@ -28,14 +29,19 @@ export default function ProductVisual({ product, tint, sizes, large = false, pre
     >
       {photo ? (
         <Image src={photo} alt={product.name} fill sizes={sizes} preload={preload} className="object-cover" />
-      ) : ingredient ? (
+      ) : standIn ? (
         <Image
-          src={ingredient.src}
-          alt={`Ingredient photo: ${ingredient.ingredient} (not the finished ${product.name})`}
+          src={standIn.src}
+          alt={
+            standIn.kind === "snack"
+              ? `Stand-in photo of ${standIn.shows} — not Igbadun Bites’ own product`
+              : `Ingredient photo: ${standIn.shows} (not the finished ${product.name})`
+          }
           fill
           sizes={sizes}
           preload={preload}
           placeholder="blur"
+          style={{ objectPosition: standIn.position ?? "50% 50%" }}
           className="object-cover [filter:sepia(0.12)_saturate(0.9)_contrast(0.98)]"
         />
       ) : (

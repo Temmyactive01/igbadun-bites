@@ -70,8 +70,12 @@ showcase, a SaaS site, or a Shopify clone. Must **not** sacrifice usability.
 - Licensed stock (Unsplash/Pexels licences) for **atmosphere only**: ingredients,
   textures, tabletop and sharing scenes, hands, natural light. Kept in
   `public/images/editorial/` with source + photographer in `CREDITS.md`.
-- **Never present stock as Igbadun Bites' own product.** Product tiles without a
-  real photo use an ingredient portrait or a typographic label — not a lookalike.
+- **Product tiles (owner decision, 2 Oct 2026):** until real product photography exists,
+  tiles show **stand-in photos of each snack** (generic, not the owner's product) so they
+  are recognisable. Conditions: licensed for commercial use only (Creative Commons /
+  Pexels — never copied from other websites), no visible brands or labels, credited
+  publicly on /credits, and the shop states clearly that they are stand-ins. Where no
+  licensed snack photo exists, an ingredient photo stands in. Data: lib/stand-in-images.ts.
 - Warm grade, natural light, tight crops; 4:5 portrait for products, 3:2 / 21:9 for
   editorial.
 
@@ -108,7 +112,7 @@ support, no information conveyed by colour alone.
 - Generic ecommerce clichés: cart-icon badges, default blue links, "SALE" stickers.
 - Rainbow colour rotation, heavy shadows, everything-rounded cards.
 - Literal "African print" clipart or costume-like decoration.
-- Stock photos passed off as the actual products.
+- Stand-in photos without the on-page note that they are stand-ins, or without credits.
 
 ---
 

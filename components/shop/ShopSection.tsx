@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Reveal from "@/components/Reveal";
 import { CONTACT } from "@/lib/contact";
 import { categoryAnchor, getProducts, groupByCategory } from "@/lib/products";
@@ -33,7 +34,10 @@ export default async function ShopSection() {
               for later.
             </p>
             <p className="mt-4 text-sm text-cocoa-soft">
-              Photos show ingredients, not the finished snacks — product photography is coming soon.
+              Photos are stand-ins showing typical versions of each snack, not our own products — our product
+              photography is coming soon. <Link href="/credits" className="underline decoration-terracotta/50 underline-offset-4 hover:decoration-terracotta">
+                Photo credits
+              </Link>
             </p>
           </Reveal>
         )}

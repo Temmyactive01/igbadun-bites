@@ -23,7 +23,7 @@ const instrument = Instrument_Sans({
 export const metadata: Metadata = {
   title: "Igbadun Bites — Nigerian snacks, made with love",
   description:
-    "Bringing Back Memories, One Bite at a Time. Chin chin, plantain chips, kokoro, coconut candy and more — Nigerian snacks for pickup or delivery.",
+    "Bringing Back Memories, One Bite at a Time. Chin chin, plantain chips, kokoro, coconut candy and more — Nigerian snacks for pickup or delivery across the UK.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

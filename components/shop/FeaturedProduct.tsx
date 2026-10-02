@@ -1,8 +1,8 @@
 import Link from "next/link";
 import AddToCartButton from "@/components/cart/AddToCartButton";
 import Reveal from "@/components/Reveal";
-import { INGREDIENT_IMAGES } from "@/lib/ingredient-images";
 import { productImageKey, productImageSrc } from "@/lib/product-images";
+import { STAND_IN_IMAGES } from "@/lib/stand-in-images";
 import { categoryAnchor } from "@/lib/products";
 import { CHAPTERS, FALLBACK_TINT } from "@/lib/shop-content";
 import type { Product } from "@/lib/types";
@@ -12,8 +12,8 @@ import ProductVisual from "./ProductVisual";
 export default function FeaturedProduct({ product }: { product: Product }) {
   const chapter = CHAPTERS[product.category];
   const pence = Math.round(Number(product.price_gbp) * 100);
-  // Large image, so say plainly when it shows an ingredient rather than the snack
-  const ingredient = productImageSrc(product.name) ? null : INGREDIENT_IMAGES[productImageKey(product.name)];
+  // Large image, so say plainly when it is a stand-in rather than our own product photo
+  const standIn = productImageSrc(product.name) ? null : STAND_IN_IMAGES[productImageKey(product.name)];
 
   return (
     <section aria-labelledby="featured-title" className="border-y border-cocoa/10 bg-offwhite">
@@ -25,10 +25,12 @@ export default function FeaturedProduct({ product }: { product: Product }) {
             sizes="(min-width: 768px) 45vw, 100vw"
             large
           />
-          {ingredient && (
+          {standIn && (
             <p className="mt-3 text-sm text-cocoa-soft">
-              <span className="font-heading italic">Pictured:</span> {ingredient.ingredient} — an ingredient, not the
-              finished snack.
+              <span className="font-heading italic">Pictured:</span>{" "}
+              {standIn.kind === "snack"
+                ? `typical ${standIn.shows} — a stand-in photo, not our own product.`
+                : `${standIn.shows} — an ingredient, not the finished snack.`}
             </p>
           )}
         </Reveal>

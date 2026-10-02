@@ -60,7 +60,8 @@ export default function Hero() {
         <div className="mt-12 grid gap-8 md:grid-cols-12 md:items-end lg:mt-10">
           <div className="fade-up md:col-span-6 lg:col-span-5" style={{ "--d": "900ms" } as React.CSSProperties}>
             <p className="text-body-l max-w-md text-oat/85">
-              Chin chin, plantain chips, coconut candy and the rest of the party tray — for pickup or delivery.
+              Chin chin, plantain chips, coconut candy and the rest of the party tray — for pickup, or delivered
+              across the UK.
             </p>
             <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-4">
               <Link

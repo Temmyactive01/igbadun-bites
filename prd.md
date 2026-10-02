@@ -124,7 +124,8 @@ supplier" etc.) — so the data model is ready for real content later, not rebui
 - Real ingredients, allergen and storage information for every product — the
   redesign will display these, so placeholders become customer-facing
 - Social handles (phone and email now confirmed — see footer, MVP item 8)
-- Delivery areas, charges, collection arrangements
+- Delivery charges and collection arrangements (**delivery area confirmed: UK-wide**,
+  2 Oct 2026 — copy updated; the delivery fee is still confirmed after ordering)
 - Payment/booking/cancellation terms
 - **Payments in GBP (blocker for live launch):** the Paystack account can't take
   GBP — test checkout currently charges a naira equivalent at a demo rate. Before

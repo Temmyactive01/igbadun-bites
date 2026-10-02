@@ -12,7 +12,6 @@ such (see style.md → Photography). Real product photos go in
 |---|---|---|---|
 | `hero-peanuts-warm.jpg` | Peanuts in shells, warm dark background | Pixabay | https://www.pexels.com/photo/209371/ |
 | `plantains.jpg` | Green and ripe plantains | Yoendry Prieto | https://www.pexels.com/photo/13924378/ |
-| `cocoyam.jpg` | Cocoyam / taro roots | Daniel Dan | https://www.pexels.com/photo/7543152/ |
 | `peanuts-in-shell.jpg` | Peanuts in shells, overhead | Marina Leonova | https://www.pexels.com/photo/7717463/ |
 | `coconut-halves.jpg` | Halved coconut | cottonbro studio | https://www.pexels.com/photo/5899685/ |
 | `sharing-table.jpg` | Hands sharing a family meal, overhead | Any Lane | https://www.pexels.com/photo/5728162/ |

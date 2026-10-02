@@ -82,6 +82,12 @@ export default function SiteFooter() {
             <Link href="/privacy" className="underline decoration-cream/30 underline-offset-4 transition duration-200 ease-brand hover:text-cream hover:decoration-gold">
               Privacy
             </Link>
+            <span className="mx-2 text-cream/30" aria-hidden>
+              |
+            </span>
+            <Link href="/credits" className="underline decoration-cream/30 underline-offset-4 transition duration-200 ease-brand hover:text-cream hover:decoration-gold">
+              Photo credits
+            </Link>
           </p>
         </div>
       </div>

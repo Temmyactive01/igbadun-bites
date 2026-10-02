@@ -3,8 +3,8 @@ import Link from "next/link";
 // Calm, honest reassurance — only things the shop actually does.
 const POINTS = [
   {
-    title: "Pickup & delivery",
-    body: "Collect from us or have it delivered — we'll confirm the details after you order.",
+    title: "Pickup & UK-wide delivery",
+    body: "Collect from us or have it delivered anywhere in the UK — we'll confirm the details after you order.",
   },
   {
     title: "Secure payment",

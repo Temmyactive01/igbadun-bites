@@ -5,22 +5,26 @@ Used in the Phase 1 homepage preview so it can be judged in place; nothing here 
 final until approved.
 
 **Honesty rules followed:** no invented founder or business history, no sourcing or
-"handmade"/"family recipe" claims, no awards or reviews, no delivery-area promises.
+"handmade"/"family recipe" claims, no awards or reviews, no unconfirmed delivery promises.
 Everything below is about the snacks, the memories they carry, and services the
-owner has confirmed (pickup & delivery; custom packs for events, parties, gifting).
+owner has confirmed (pickup & UK-wide delivery; custom packs for events, parties, gifting).
 Lines marked **[OWNER]** need the owner's real story or facts.
 
-> **Correction to the live site:** the current hero says "Delivered across the UK".
-> Delivery areas are still unconfirmed (prd.md open item), so the new copy says
-> "pickup & delivery" instead.
+> **Delivery area confirmed (2 Oct 2026):** the owner has confirmed delivery is
+> UK-wide. Copy now says so (hero, search description, practical strip). The
+> delivery *fee* is still confirmed after ordering — no courier details yet.
 
 ---
+
+## Search-engine description
+Bringing Back Memories, One Bite at a Time. Chin chin, plantain chips, kokoro, coconut
+candy and more — Nigerian snacks for pickup or delivery across the UK.
 
 ## Hero
 - **Headline (unchanged):** Bringing back *memories*, one bite at a time.
 - **Eyebrow:** Nigerian snacks · Made for sharing
 - **Supporting line:** Chin chin, plantain chips, coconut candy and the rest of the
-  party tray — for pickup or delivery.
+  party tray — for pickup, or delivered across the UK.
 - **CTA:** Shop the snacks
 
 ## Manifesto (one line, oversized)
@@ -76,8 +80,8 @@ your palm and made last all afternoon.
 - **CTA:** Plan a pack on WhatsApp
 
 ## Practical strip
-- **Pickup & delivery** — Collect from us or have it delivered; we'll confirm the
-  details after you order.
+- **Pickup & UK-wide delivery** — Collect from us or have it delivered anywhere in
+  the UK; we'll confirm the details after you order.
 - **Secure payment** — Paid through Paystack. We never see your card details.
 - **Your orders, saved** — Sign in with Google to see your order history any time.
 
