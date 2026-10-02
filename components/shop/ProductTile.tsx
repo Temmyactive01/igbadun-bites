@@ -1,28 +1,47 @@
 import AddToCartButton from "@/components/cart/AddToCartButton";
 import type { Product } from "@/lib/types";
+import DetailsTrigger from "./DetailsTrigger";
 import ProductVisual from "./ProductVisual";
 
 type Props = { product: Product; tint: string };
 
 // Familiar, easy-to-scan product tile: one image, name, price, add.
-// (Phase 3 adds the detail sheet — description, ingredients, allergens — and the
-// morphing add action.)
+// The image, the name and "Details & allergens" all open the product detail panel
+// (ingredients, allergens, storage); the add control morphs into a quantity stepper.
 export default function ProductTile({ product, tint }: Props) {
   const price = `£${Number(product.price_gbp).toFixed(2)}`;
   const pence = Math.round(Number(product.price_gbp) * 100);
 
   return (
     <article aria-labelledby={`p-${product.id}`} className="group flex h-full flex-col">
-      <ProductVisual product={product} tint={tint} sizes="(min-width: 768px) 30vw, 48vw" />
+      {/* Image and name are mouse/touch shortcuts; "Details & allergens" is the one keyboard stop */}
+      <DetailsTrigger product={product} tint={tint} tabIndex={-1} label={`${product.name}: details and allergens`} className="block w-full cursor-pointer text-left">
+        <ProductVisual product={product} tint={tint} sizes="(min-width: 768px) 30vw, 48vw" />
+      </DetailsTrigger>
 
       <div className="mt-3 flex flex-1 flex-col sm:mt-4">
         <div className="flex flex-col gap-0.5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
           <h3 id={`p-${product.id}`} className="font-heading text-lg leading-snug sm:text-xl lg:text-2xl">
-            {product.name}
+            <DetailsTrigger
+              product={product}
+              tint={tint}
+              tabIndex={-1}
+              className="rounded-sm text-left decoration-terracotta/50 underline-offset-4 hover:underline"
+            >
+              {product.name}
+            </DetailsTrigger>
           </h3>
           <span className="shrink-0 font-medium tabular-nums">{price}</span>
         </div>
-        <div className="mt-3 flex flex-1 items-end justify-between gap-2">
+        <DetailsTrigger
+          product={product}
+          tint={tint}
+          label={`Details and allergens for ${product.name}`}
+          className="mt-1 self-start rounded-sm text-xs text-cocoa-soft underline decoration-cocoa/25 underline-offset-4 hover:text-cocoa hover:decoration-terracotta sm:text-sm"
+        >
+          Details &amp; allergens
+        </DetailsTrigger>
+        <div className="mt-3 flex flex-1 flex-wrap items-end justify-between gap-2">
           <span className="text-xs text-cocoa-soft sm:text-sm">{product.pack_size}</span>
           <AddToCartButton
             soldOut={!product.available}

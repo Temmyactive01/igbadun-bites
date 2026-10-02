@@ -6,6 +6,7 @@ import { STAND_IN_IMAGES } from "@/lib/stand-in-images";
 import { categoryAnchor } from "@/lib/products";
 import { CHAPTERS, FALLBACK_TINT } from "@/lib/shop-content";
 import type { Product } from "@/lib/types";
+import DetailsTrigger from "./DetailsTrigger";
 import ProductVisual from "./ProductVisual";
 
 // One product given a full composition: large visual, generous type, one action.
@@ -51,6 +52,13 @@ export default function FeaturedProduct({ product }: { product: Product }) {
               soldOut={!product.available}
               item={{ productId: product.id, name: product.name, packSize: product.pack_size, category: product.category, pricePence: pence }}
             />
+            <DetailsTrigger
+              product={product}
+              tint={chapter?.tint ?? FALLBACK_TINT}
+              className="rounded-sm text-sm font-medium underline decoration-terracotta/50 underline-offset-[6px] hover:decoration-terracotta"
+            >
+              Details &amp; allergens
+            </DetailsTrigger>
             <Link
               href={`#${categoryAnchor(product.category)}`}
               className="rounded-sm text-sm font-medium underline decoration-terracotta/50 underline-offset-[6px] hover:decoration-terracotta"

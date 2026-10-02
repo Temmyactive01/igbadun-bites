@@ -14,6 +14,13 @@ look for. They are **not** facts about your products. Recipes for these snacks v
 a lot (for example, some chin chin has egg and some doesn't; some kokoro is fried
 in groundnut oil), so please check every line against the real thing.
 
+**Update 2 Oct 2026:** the shop now shows *researched typical recipes* for every
+product, clearly labelled "Typical recipe — not yet confirmed by our supplier", with the
+allergy WhatsApp line. **Before taking real orders you must confirm each product's
+allergens** (and ideally ingredients and storage) against your own recipe or label.
+Once a product is confirmed it's marked `details_status = 'confirmed'` in the database
+(see supabase/003_product_details.sql) and the "not yet confirmed" label disappears.
+
 When you've filled this in, send it back. It will go into the shop, where each
 product's details panel will show the ingredients, allergens and storage guidance,
 plus a line asking anyone with an allergy to contact you before ordering.
@@ -86,7 +93,7 @@ tick or cross each allergen. Leave nothing as "probably".
 - **Description check:** the site currently says "Bean-based crunchy snack, Ogbomosho style." Is that accurate?
 
 ### 4. Kokoro Egba — 200g ⚠ description needs confirming
-- **Typical ingredients (to check):** maize (corn) flour, sugar, salt, pepper, frying oil. Some recipes add cassava/garri or wheat flour, and some add **groundnut powder** (one published description: "made from corn meal and groundnut powder").
+- **Typical ingredients (to check):** maize (corn) flour, garri (cassava), sugar, salt, pepper, frying oil. Kokoro Egba (Abeokuta) is usually ring-shaped and cream-coloured. Some recipes add wheat flour, and some add **groundnut powder** (one published description: "made from corn meal and groundnut powder").
 - **Allergens to ask about:** **Peanuts** (groundnut powder, or groundnut oil), **Gluten** (if any wheat flour is used), Soya (oil).
 - **Confirmed ingredients:** ________________________________
 - **Contains:** ________ **May contain:** ________
@@ -109,7 +116,7 @@ tick or cross each allergen. Leave nothing as "probably".
 
 ### 7. Gurundi — 150g ⚠ description is probably wrong
 - **⚠ Discrepancy:** the site currently describes Gurundi as a **"traditional crunchy bean snack"**. Gurundi is usually a **hard coconut biscuit**: wheat flour, desiccated coconut, sugar and fat, baked hard. Please confirm what yours is.
-- **Typical ingredients (to check, if coconut biscuit):** wheat flour, desiccated coconut, sugar, butter or margarine, baking powder, sometimes egg or milk.
+- **Typical ingredients (to check, if coconut biscuit):** traditionally grated coconut, cassava (tapioca) starch, sugar and nutmeg, baked thin; some versions use wheat flour, butter, egg or milk.
 - **Allergens to ask about:** **Gluten (wheat)**, Milk, Eggs, Soya. Coconut isn't one of the 14, but state it.
 - **Confirmed ingredients:** ________________________________
 - **Contains:** ________ **May contain:** ________
@@ -124,15 +131,15 @@ tick or cross each allergen. Leave nothing as "probably".
 - **Storage:** ________________________________
 
 ### 9. Sisi Pelebe — 150g ⚠ needs confirming
-- **Unsure what this product is.** The site currently says "Thin, crispy sweet snack." Please describe it: what it's made from, and whether it's fried or baked.
-- **Allergens to ask about:** all 14. If it's flour-based: Gluten, Milk, Eggs; plus Peanuts or Soya from the oil.
+- **Research says this is a groundnut toffee:** roasted groundnuts, sugar and a pinch of salt, caramelised, rolled thin and cut into long diamonds ("skinny lady"). The site's description ("Thin, crispy sweet snack") and the stand-in photo (rolled dough) don't reflect that. Please confirm.
+- **Allergens to ask about:** **Peanuts** (almost certain if this is groundnut toffee), Milk or Soya (if butter or margarine is added).
 - **Confirmed ingredients:** ________________________________
 - **Contains:** ________ **May contain:** ________
 - **Storage:** ________________________________
 - **Correct description:** ________________________________
 
 ### 10. Baba Dudu — 150g
-- **Typical ingredients (to check):** sugar or brown sugar cooked to a dark caramel; some versions add coconut, milk or margarine.
+- **Typical ingredients (to check):** coconut milk or cream and sugar, cooked to a dark caramel, pinch of salt (it's a dark coconut candy, "sweet alagbon"); some versions add milk or butter.
 - **Allergens to ask about:** Milk (if milk or butter is added), Soya (margarine), Sulphites (some brown sugars or syrups).
 - **Confirmed ingredients:** ________________________________
 - **Contains:** ________ **May contain:** ________

@@ -6,6 +6,7 @@ import { CHAPTERS, FEATURED_PRODUCT_NAME } from "@/lib/shop-content";
 import Chapter from "./Chapter";
 import ChapterIndex from "./ChapterIndex";
 import FeaturedProduct from "./FeaturedProduct";
+import ProductSheet from "./ProductSheet";
 
 const numberWords = ["No", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen", "Twenty"];
 
@@ -66,6 +67,9 @@ export default async function ShopSection() {
           {groups.map((group, i) => (
             <Chapter key={group.category} number={i + 1} category={group.category} products={group.products} />
           ))}
+
+          {/* One shared detail panel (ingredients, allergens, storage) for every product */}
+          <ProductSheet />
 
           {/* Quiet note: the catalogue isn't exhaustive */}
           <div className="mx-auto max-w-[1440px] px-4 pb-[clamp(4rem,2rem+6vw,8rem)] sm:px-8 lg:px-12">

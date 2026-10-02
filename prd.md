@@ -73,7 +73,11 @@ submitted state).
    occasions)
 2. Product discovery (category chapters, featured product, rails, chapter index)
 3. Product cards + product detail sheet (sensory copy, morphing add-to-basket,
-   **ingredients/allergens/storage visible for every product**)
+   **ingredients/allergens/storage visible for every product**) — built 2 Oct 2026:
+   add morphs into a − qty + stepper; detail panel per product. All 13 products still
+   hold the "TBC with supplier" placeholders, shown as "not yet confirmed" with an
+   allergy contact line — real data needed before launch
+   (docs/owner/ingredient-allergen-checklist.md).
 4. Cart, checkout, orders (reskin; same logic)
 5. Footer + final motion/accessibility polish
 
