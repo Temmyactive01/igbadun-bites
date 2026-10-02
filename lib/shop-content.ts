@@ -9,6 +9,7 @@ import plantainsImage from "@/public/images/editorial/plantains.jpg";
 
 export type ChapterContent = {
   title: string; // display title (can differ from the database category name)
+  shortTitle: string; // used in the chapter index, so it fits a phone screen without scrolling
   kicker: string; // one-line headline
   body: string;
   image?: { src: StaticImageData; alt: string; caption: string };
@@ -18,6 +19,7 @@ export type ChapterContent = {
 export const CHAPTERS: Record<string, ChapterContent> = {
   Chips: {
     title: "Chips",
+    shortTitle: "Chips",
     kicker: "Golden, thin and loud.",
     body: "Plantain and cocoyam chips with that unmistakable snap — the bag that never makes it home unopened.",
     image: { src: plantainsImage, alt: "Green and ripe plantains", caption: "Plantains, before they become chips" },
@@ -25,6 +27,7 @@ export const CHAPTERS: Record<string, ChapterContent> = {
   },
   "Crunchy snacks": {
     title: "Crunchy snacks",
+    shortTitle: "Crunchy",
     kicker: "The sound of every party tray.",
     body: "Chin chin, kokoro, akara, gurundi and groundnuts — for long journeys, late conversations and “just one more handful”.",
     image: { src: peanutsImage, alt: "Groundnuts in their shells", caption: "Groundnuts, still in their shells" },
@@ -32,6 +35,7 @@ export const CHAPTERS: Record<string, ChapterContent> = {
   },
   "Traditional treats and sweets": {
     title: "Traditional treats & sweets",
+    shortTitle: "Treats",
     kicker: "The sweets you saved for later.",
     body: "Coconut candy, baba dudu, condensed milk sweets and more — the ones you counted out in your palm and made last all afternoon.",
     image: { src: coconutImage, alt: "A coconut split in half", caption: "Fresh coconut" },

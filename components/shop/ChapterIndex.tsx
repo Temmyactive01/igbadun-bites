@@ -1,24 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
-type Item = { id: string; title: string; count: number };
+type Item = { id: string; title: string; shortTitle: string; count: number };
 
 // Slim chapter index that sticks under the header while you browse the shop,
-// highlighting the chapter currently on screen.
+// highlighting the chapter currently on screen. No horizontal scrolling: phones get
+// short titles so all chapters always fit.
 export default function ChapterIndex({ items }: { items: Item[] }) {
   const [active, setActive] = useState<string | null>(null);
-  const listRef = useRef<HTMLOListElement>(null);
-
-  // On phones the index is wider than the screen: keep the current chapter in view
-  // (scrolls the index sideways only — never the page).
-  useEffect(() => {
-    const list = listRef.current;
-    const link = active ? list?.querySelector<HTMLElement>(`a[href="#${active}"]`) : null;
-    if (!list || !link) return;
-    const target = link.offsetLeft - (list.clientWidth - link.offsetWidth) / 2;
-    list.scrollTo({ left: Math.max(0, target), behavior: "smooth" });
-  }, [active]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -48,11 +38,11 @@ export default function ChapterIndex({ items }: { items: Item[] }) {
       aria-label="Shop chapters"
       className="sticky top-16 z-30 border-y border-cocoa/10 bg-oat/90 backdrop-blur-md lg:top-20"
     >
-      <ol ref={listRef} className="mx-auto flex max-w-[1440px] gap-6 overflow-x-auto px-4 [scrollbar-width:none] sm:gap-10 sm:px-8 lg:px-12 [&::-webkit-scrollbar]:hidden">
+      <ol className="mx-auto flex max-w-[1440px] justify-between gap-2 px-4 sm:justify-start sm:gap-10 sm:px-8 lg:px-12">
         {items.map((item, i) => {
           const isActive = active === item.id;
           return (
-            <li key={item.id} className="shrink-0">
+            <li key={item.id} className="min-w-0">
               <a
                 href={`#${item.id}`}
                 aria-current={isActive ? "true" : undefined}
@@ -61,7 +51,8 @@ export default function ChapterIndex({ items }: { items: Item[] }) {
                 }`}
               >
                 <span className="font-heading italic">{String(i + 1).padStart(2, "0")}</span>
-                <span className="font-medium">{item.title}</span>
+                <span className="font-medium sm:hidden">{item.shortTitle}</span>
+                <span className="hidden font-medium sm:inline">{item.title}</span>
                 <span className="text-xs text-cocoa-soft tabular-nums">{item.count}</span>
                 <span
                   aria-hidden

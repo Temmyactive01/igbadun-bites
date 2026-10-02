@@ -32,6 +32,9 @@ export default async function ShopSection() {
               {count} snacks in {groups.length} chapters — from the crunch of the party tray to the sweets you saved
               for later.
             </p>
+            <p className="mt-4 text-sm text-cocoa-soft">
+              Photos show ingredients, not the finished snacks — product photography is coming soon.
+            </p>
           </Reveal>
         )}
       </div>
@@ -49,6 +52,7 @@ export default async function ShopSection() {
             items={groups.map((g) => ({
               id: categoryAnchor(g.category),
               title: CHAPTERS[g.category]?.title ?? g.category,
+              shortTitle: CHAPTERS[g.category]?.shortTitle ?? g.category,
               count: g.products.length,
             }))}
           />

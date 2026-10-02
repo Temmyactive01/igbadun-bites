@@ -57,7 +57,8 @@ Creative direction and tokens: **style.md (v2)**. Full audit, homepage compositi
 motion and responsive plan: **docs/redesign/phase-0-audit.md**.
 
 **Status:** Phase 0 and Phase 1 approved 2 Oct 2026. Phase 2 (product discovery) built on the
-`redesign` branch — in review at https://redesign--igbadun-bites.netlify.app
+`redesign` branch, revised 2 Oct per review (vertical 2-col grid on phones, no swiping;
+ingredient photos on tiles; subtle tile radius) — in review at https://redesign--igbadun-bites.netlify.app
 
 **Must not break:** Supabase data and RLS, Google sign-in, product data, basket,
 checkout and Paystack verification, confirmation emails, order history. The redesign

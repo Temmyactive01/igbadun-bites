@@ -3,7 +3,7 @@ import Reveal from "@/components/Reveal";
 import { categoryAnchor } from "@/lib/products";
 import { CHAPTERS, FALLBACK_TINT } from "@/lib/shop-content";
 import type { Product } from "@/lib/types";
-import ProductRail from "./ProductRail";
+import ProductGrid from "./ProductGrid";
 import ProductTile from "./ProductTile";
 
 type Props = { number: number; category: string; products: Product[] };
@@ -66,11 +66,11 @@ export default function Chapter({ number, category, products }: Props) {
 
         {/* Products */}
         <div className="mt-16 lg:mt-24">
-          <ProductRail label={title} pair={products.length <= 2}>
+          <ProductGrid label={title} pair={products.length <= 2}>
             {products.map((product) => (
               <ProductTile key={product.id} product={product} tint={content?.tint ?? FALLBACK_TINT} />
             ))}
-          </ProductRail>
+          </ProductGrid>
         </div>
       </div>
     </section>
