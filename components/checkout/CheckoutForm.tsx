@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { useState, useSyncExternalStore } from "react";
+import OrderLines from "@/components/orders/OrderLines";
+import { buttonLg, buttonMd, buttonPrimary, fieldHint, fieldInput, fieldLabel, notice, panel } from "@/components/ui/styles";
 import { formatPence, useCart } from "@/lib/cart-store";
 import { CHARGE_CURRENCY, DEMO_NGN_PER_GBP, formatCharge } from "@/lib/payment-config";
 
@@ -10,8 +12,8 @@ type Fulfilment = "pickup" | "delivery";
 
 const noop = () => () => {};
 
-const inputClass =
-  "mt-1.5 w-full rounded-xl border border-brown/20 bg-cream px-4 py-3 text-brown placeholder:text-brown-soft/50 transition duration-200 ease-brand focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30";
+const inputClass = fieldInput;
+const legendClass = "text-title serif-editorial";
 
 export default function CheckoutForm({ defaultName, email }: Props) {
   const { items, subtotalPence } = useCart();
@@ -55,17 +57,14 @@ export default function CheckoutForm({ defaultName, email }: Props) {
     }
   }
 
-  if (!isClient) return <div className="mt-10 h-96 animate-pulse rounded-[1.75rem] bg-cream-deep/60" aria-hidden />;
+  if (!isClient) return <div className="mt-12 h-96 animate-pulse rounded-lg bg-oat-deep/60" aria-hidden />;
 
   if (items.length === 0) {
     return (
-      <div className="mt-10 max-w-lg rounded-[1.75rem] bg-cream p-8 shadow-warm ring-1 ring-brown/5">
-        <h2 className="text-2xl font-semibold">Your basket is empty.</h2>
-        <p className="mt-2 text-brown-soft">Add a few snacks first, then come back here to check out.</p>
-        <Link
-          href="/#shop"
-          className="press mt-6 inline-flex rounded-full bg-gold px-6 py-3 font-semibold text-brown hover:bg-brown hover:text-cream"
-        >
+      <div className="mt-12 max-w-lg border-t border-cocoa/15 pt-8">
+        <h2 className="text-title serif-editorial">Your basket is empty.</h2>
+        <p className="mt-3 text-cocoa-soft">Add a few snacks first, then come back here to check out.</p>
+        <Link href="/#shop" className={`${buttonPrimary} ${buttonMd} mt-8`}>
           Browse the snacks
         </Link>
       </div>
@@ -73,11 +72,11 @@ export default function CheckoutForm({ defaultName, email }: Props) {
   }
 
   return (
-    <form onSubmit={onSubmit} className="mt-10 grid gap-10 lg:grid-cols-12 lg:gap-12">
-      <div className="space-y-10 lg:col-span-7">
+    <form onSubmit={onSubmit} className="mt-12 grid gap-12 lg:grid-cols-12 lg:gap-16">
+      <div className="space-y-12 lg:col-span-7">
         {/* Pickup or delivery */}
         <fieldset>
-          <legend className="font-heading text-2xl font-semibold">How would you like your snacks?</legend>
+          <legend className={legendClass}>How would you like your snacks?</legend>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             {(
               [
@@ -87,8 +86,10 @@ export default function CheckoutForm({ defaultName, email }: Props) {
             ).map((option) => (
               <label
                 key={option.value}
-                className={`press cursor-pointer rounded-2xl border-2 p-5 ${
-                  fulfilment === option.value ? "border-gold bg-gold/10" : "border-brown/15 bg-cream hover:border-brown/40"
+                className={`press cursor-pointer rounded-lg border p-5 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-terracotta has-[:focus-visible]:ring-offset-2 has-[:focus-visible]:ring-offset-oat ${
+                  fulfilment === option.value
+                    ? "border-cocoa bg-offwhite shadow-[inset_0_0_0_1px_var(--color-cocoa)]"
+                    : "border-cocoa/15 hover:border-cocoa/40"
                 }`}
               >
                 <input
@@ -100,28 +101,30 @@ export default function CheckoutForm({ defaultName, email }: Props) {
                   className="sr-only"
                 />
                 <span className="flex items-center justify-between">
-                  <span className="font-heading text-xl font-semibold">{option.title}</span>
+                  <span className="font-heading text-xl">{option.title}</span>
                   <span
-                    className={`h-5 w-5 rounded-full border-2 ${
-                      fulfilment === option.value ? "border-gold bg-gold shadow-[inset_0_0_0_3px_var(--color-cream)]" : "border-brown/30"
+                    className={`h-5 w-5 rounded-full border ${
+                      fulfilment === option.value
+                        ? "border-terracotta bg-terracotta shadow-[inset_0_0_0_4px_var(--color-offwhite)]"
+                        : "border-cocoa/30"
                     }`}
                     aria-hidden
                   />
                 </span>
-                <span className="mt-1.5 block text-sm text-brown-soft">{option.note}</span>
+                <span className="mt-2 block text-sm text-cocoa-soft">{option.note}</span>
               </label>
             ))}
           </div>
         </fieldset>
 
         {/* Contact */}
-        <fieldset className="space-y-4">
-          <legend className="font-heading text-2xl font-semibold">Your details</legend>
-          <label className="block text-sm font-medium">
+        <fieldset className="space-y-5">
+          <legend className={legendClass}>Your details</legend>
+          <label className={`${fieldLabel} pt-4`}>
             Full name
             <input name="name" required maxLength={100} defaultValue={defaultName} autoComplete="name" className={inputClass} />
           </label>
-          <label className="block text-sm font-medium">
+          <label className={fieldLabel}>
             Phone number
             <input
               name="phone"
@@ -132,31 +135,31 @@ export default function CheckoutForm({ defaultName, email }: Props) {
               placeholder="07700 900123"
               className={inputClass}
             />
-            <span className="mt-1 block text-xs font-normal text-brown-soft">So we can arrange your {fulfilment}.</span>
+            <span className={fieldHint}>So we can arrange your {fulfilment}.</span>
           </label>
-          <p className="text-sm text-brown-soft">
-            Confirmation goes to <span className="font-medium text-brown">{email}</span>
+          <p className="text-sm text-cocoa-soft">
+            Confirmation goes to <span className="font-medium text-cocoa">{email}</span>
           </p>
         </fieldset>
 
         {/* Address — only for delivery */}
         {fulfilment === "delivery" && (
-          <fieldset className="space-y-4">
-            <legend className="font-heading text-2xl font-semibold">Delivery address</legend>
-            <label className="block text-sm font-medium">
+          <fieldset className="morph-in space-y-5">
+            <legend className={legendClass}>Delivery address</legend>
+            <label className={`${fieldLabel} pt-4`}>
               Address line 1
               <input name="line1" required maxLength={120} autoComplete="address-line1" className={inputClass} />
             </label>
-            <label className="block text-sm font-medium">
-              Address line 2 <span className="font-normal text-brown-soft">(optional)</span>
+            <label className={fieldLabel}>
+              Address line 2 <span className="font-normal text-cocoa-soft">(optional)</span>
               <input name="line2" maxLength={120} autoComplete="address-line2" className={inputClass} />
             </label>
             <div className="grid gap-4 sm:grid-cols-2">
-              <label className="block text-sm font-medium">
+              <label className={fieldLabel}>
                 Town / city
                 <input name="city" required maxLength={80} autoComplete="address-level2" className={inputClass} />
               </label>
-              <label className="block text-sm font-medium">
+              <label className={fieldLabel}>
                 Postcode
                 <input
                   name="postcode"
@@ -173,38 +176,35 @@ export default function CheckoutForm({ defaultName, email }: Props) {
 
       {/* Order summary */}
       <aside className="lg:col-span-5">
-        <div className="rounded-[1.75rem] bg-cream p-6 shadow-warm ring-1 ring-brown/5 sm:p-8 lg:sticky lg:top-8">
-          <h2 className="font-heading text-2xl font-semibold">Your order</h2>
-          <ul className="mt-5 divide-y divide-brown/10">
-            {items.map((item) => (
-              <li key={item.productId} className="flex justify-between gap-4 py-3">
-                <span>
-                  <span className="font-medium">{item.name}</span>
-                  <span className="block text-sm text-brown-soft">
-                    {item.quantity} × {formatPence(item.pricePence)} · {item.packSize}
-                  </span>
-                </span>
-                <span className="font-medium tabular-nums">{formatPence(item.pricePence * item.quantity)}</span>
-              </li>
-            ))}
-          </ul>
-          <dl className="mt-4 space-y-2 border-t border-brown/10 pt-4 text-sm">
+        <div className={`${panel} p-6 sm:p-8 lg:sticky lg:top-28`}>
+          <h2 className={legendClass}>Your order</h2>
+          <OrderLines
+            className="mt-3"
+            lines={items.map((item) => ({
+              name: item.name,
+              packSize: item.packSize,
+              category: item.category,
+              quantity: item.quantity,
+              unitPence: item.pricePence,
+            }))}
+          />
+          <dl className="space-y-2 border-t border-cocoa/10 pt-4 text-sm">
             <div className="flex justify-between">
-              <dt className="text-brown-soft">Subtotal</dt>
+              <dt className="text-cocoa-soft">Subtotal</dt>
               <dd className="tabular-nums">{formatPence(subtotalPence)}</dd>
             </div>
             <div className="flex justify-between">
-              <dt className="text-brown-soft">{fulfilment === "delivery" ? "Delivery" : "Pickup"}</dt>
+              <dt className="text-cocoa-soft">{fulfilment === "delivery" ? "Delivery" : "Pickup"}</dt>
               <dd>{fulfilment === "delivery" ? "Confirmed after ordering" : "Free"}</dd>
             </div>
-            <div className="flex items-baseline justify-between border-t border-brown/10 pt-3 text-base">
-              <dt className="font-semibold">Total to pay now</dt>
-              <dd className="font-heading text-2xl font-bold tabular-nums">{formatPence(subtotalPence)}</dd>
+            <div className="flex items-baseline justify-between border-t border-cocoa/10 pt-4 text-base">
+              <dt className="text-eyebrow text-cocoa">Total to pay now</dt>
+              <dd className="font-heading text-3xl tabular-nums">{formatPence(subtotalPence)}</dd>
             </div>
           </dl>
 
           {error && (
-            <p role="alert" className="mt-5 rounded-xl bg-terracotta/10 px-4 py-3 text-sm text-terracotta">
+            <p role="alert" className={`${notice} mt-6 text-sm`}>
               {error}
             </p>
           )}
@@ -212,15 +212,15 @@ export default function CheckoutForm({ defaultName, email }: Props) {
           <button
             type="submit"
             disabled={submitting}
-            className="press mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-gold px-6 py-4 font-semibold text-brown shadow-warm hover:bg-brown hover:text-cream disabled:cursor-wait disabled:opacity-70"
+            className={`${buttonPrimary} ${buttonLg} mt-6 w-full`}
           >
             {submitting ? "Taking you to secure payment…" : `Pay ${formatPence(subtotalPence)}`}
           </button>
-          <p className="mt-3 text-center text-xs text-brown-soft">
+          <p className="mt-3 text-center text-xs text-cocoa-soft">
             Secure payment by Paystack. We never see your card details.
           </p>
           {CHARGE_CURRENCY !== "GBP" && (
-            <p className="mt-4 rounded-xl border border-dashed border-gold/60 bg-gold/10 px-4 py-3 text-xs leading-relaxed text-brown">
+            <p className="mt-5 rounded-md border border-dashed border-plantain-deep/50 bg-plantain/10 px-4 py-3 text-xs leading-relaxed text-cocoa">
               <span className="font-semibold">Test payment:</span> Paystack will show{" "}
               <span className="font-semibold">{formatCharge(subtotalPence)}</span> — the naira equivalent at a demo rate of
               £1 = ₦{DEMO_NGN_PER_GBP.toLocaleString("en-GB")}. No real money is taken.

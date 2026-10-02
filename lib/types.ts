@@ -8,6 +8,10 @@ export type Product = {
   ingredients: string;
   allergens: string;
   storage_guidance: string;
+  // Added in supabase/003_product_details.sql. "researched" = typical-recipe info we
+  // researched, NOT yet confirmed by the owner/supplier; "confirmed" = owner signed off.
+  // Missing (migration not yet run) is treated as "researched".
+  details_status?: "researched" | "confirmed";
   available: boolean;
   created_at: string;
 };

@@ -56,7 +56,9 @@ editorial brand experience — while remaining an excellent, accessible shop.
 Creative direction and tokens: **style.md (v2)**. Full audit, homepage composition,
 motion and responsive plan: **docs/redesign/phase-0-audit.md**.
 
-**Status:** Phase 0 (audit + direction) written 2 Oct 2026 — awaiting approval.
+**Status:** Phase 0 and Phase 1 approved 2 Oct 2026. Phase 2 (product discovery) built on the
+`redesign` branch, revised 2 Oct per review (vertical 2-col grid on phones, no swiping;
+ingredient photos on tiles; subtle tile radius) — in review at https://redesign--igbadun-bites.netlify.app
 
 **Must not break:** Supabase data and RLS, Google sign-in, product data, basket,
 checkout and Paystack verification, confirmation emails, order history. The redesign
@@ -71,9 +73,20 @@ submitted state).
    occasions)
 2. Product discovery (category chapters, featured product, rails, chapter index)
 3. Product cards + product detail sheet (sensory copy, morphing add-to-basket,
-   **ingredients/allergens/storage visible for every product**)
-4. Cart, checkout, orders (reskin; same logic)
-5. Footer + final motion/accessibility polish
+   **ingredients/allergens/storage visible for every product**) — built 2 Oct 2026:
+   add morphs into a − qty + stepper; detail panel per product. All 13 products show
+   **researched typical recipes** (supabase/003_product_details.sql), labelled "not yet
+   confirmed by our supplier", plus the allergy WhatsApp line. **Before real orders the
+   owner must confirm allergens per product** and set details_status = 'confirmed'
+   (docs/owner/ingredient-allergen-checklist.md).
+4. Cart, checkout, orders (reskin; same logic) — built 2 Oct 2026: basket as bottom
+   sheet (phones) / side panel, sticky phone basket bar, checkout / confirmation /
+   order history on the v2 system; Supabase queries, /api/checkout, Paystack and
+   order emails unchanged
+5. Footer + final motion/accessibility polish — built 2 Oct 2026: closing-composition
+   footer; privacy and sign-in error pages restyled; skip link; shared dialog hook
+   with focus trap (basket, product panel, mobile menu); 44px targets; reduced-motion
+   coverage; axe-core audit clean (0 violations) on every page and dialog state
 
 **New requirements introduced by the redesign:**
 - Product detail view showing description, ingredients, allergens, storage and pack
@@ -122,7 +135,8 @@ supplier" etc.) — so the data model is ready for real content later, not rebui
 - Real ingredients, allergen and storage information for every product — the
   redesign will display these, so placeholders become customer-facing
 - Social handles (phone and email now confirmed — see footer, MVP item 8)
-- Delivery areas, charges, collection arrangements
+- Delivery charges and collection arrangements (**delivery area confirmed: UK-wide**,
+  2 Oct 2026 — copy updated; the delivery fee is still confirmed after ordering)
 - Payment/booking/cancellation terms
 - **Payments in GBP (blocker for live launch):** the Paystack account can't take
   GBP — test checkout currently charges a naira equivalent at a demo rate. Before

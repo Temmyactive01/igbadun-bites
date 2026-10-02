@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter } from "next/font/google";
+import { Fraunces, Instrument_Sans } from "next/font/google";
+import BasketBar from "@/components/cart/BasketBar";
 import CartDrawer from "@/components/cart/CartDrawer";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
@@ -14,22 +15,23 @@ const fraunces = Fraunces({
   axes: ["opsz", "SOFT"],
 });
 
-const inter = Inter({
-  variable: "--font-inter",
+// UI / body face (v2): restrained, characterful, tabular figures for prices
+const instrument = Instrument_Sans({
+  variable: "--font-instrument",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
   title: "Igbadun Bites — Nigerian snacks, made with love",
   description:
-    "Bringing Back Memories, One Bite at a Time. Chin chin, plantain chips, kokoro, coconut candy and more — Nigerian snacks delivered across the UK.",
+    "Bringing Back Memories, One Bite at a Time. Chin chin, plantain chips, kokoro, coconut candy and more — Nigerian snacks for pickup or delivery across the UK.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en-GB"
-      className={`${fraunces.variable} ${inter.variable} h-full antialiased`}
+      className={`${fraunces.variable} ${instrument.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>
@@ -37,9 +39,17 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
       </head>
       <body className="min-h-full flex flex-col">
+        {/* Keyboard users can jump straight past the header (every page's <main> has id="main") */}
+        <a
+          href="#main"
+          className="sr-only rounded-full bg-cocoa px-5 py-3 font-medium text-oat focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60]"
+        >
+          Skip to content
+        </a>
         <SiteHeader />
         {children}
         <SiteFooter />
+        <BasketBar />
         <CartDrawer />
       </body>
     </html>

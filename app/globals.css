@@ -1,28 +1,44 @@
 @import "tailwindcss";
 
 /*
-  Igbadun Bites brand theme (from style.md).
-  Working palette until the business owner sends exact brand hex codes.
-  Usage in Tailwind: bg-cream, text-brown, bg-gold, text-forest, bg-terracotta, etc.
+  Igbadun Bites design tokens — v2 creative direction (style.md, docs/redesign/phase-0-audit.md).
+  Contrast on oat: cocoa 13.9:1 · cocoa-soft 7.3:1 · terracotta 4.75:1 · leaf 5.0:1.
+  Plantain gold is 1.9:1 on oat — never use it as text on light; fine on cocoa (7.3:1).
 */
 @theme {
-  --color-cream: #faf3e7;
-  --color-cream-deep: #f1e4cc;
-  --color-brown: #3b2416;
-  --color-brown-soft: #6b4a36;
-  --color-gold: #c9972d;
-  --color-gold-dark: #a87b1f;
-  --color-forest: #2f4a32;
-  --color-terracotta: #b5542a;
+  /* ---- v2 palette ---- */
+  --color-oat: #f2e9da;
+  --color-oat-deep: #e8dbc5;
+  --color-offwhite: #fbf7f0;
+  --color-cocoa: #2b1a12;
+  --color-cocoa-soft: #5e4536;
+  --color-terracotta: #a84a24;
+  --color-plantain: #d9a23e;
+  --color-plantain-deep: #8c6418;
+  --color-leaf: #4e6a48;
 
+  /* ---- v1 names, mapped onto the v2 palette ----
+     Pages not yet redesigned (checkout, orders, …) still use these names; mapping them
+     keeps every page on the new palette until its own redesign phase. Don't use in new code. */
+  --color-cream: var(--color-oat);
+  --color-cream-deep: var(--color-oat-deep);
+  --color-brown: var(--color-cocoa);
+  --color-brown-soft: var(--color-cocoa-soft);
+  --color-gold: var(--color-plantain);
+  --color-gold-dark: var(--color-plantain-deep);
+  --color-forest: var(--color-leaf);
+
+  /* ---- Type ---- */
   --font-heading: var(--font-fraunces), Georgia, serif;
-  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-sans: var(--font-instrument), system-ui, sans-serif;
 
-  /* Warm, brown-tinted shadows — never pure gray */
-  --shadow-warm: 0 2px 6px rgb(59 36 22 / 0.08), 0 8px 24px rgb(59 36 22 / 0.08);
-  --shadow-warm-lg: 0 4px 12px rgb(59 36 22 / 0.1), 0 20px 48px rgb(59 36 22 / 0.14);
+  /* Shadows are mostly retired in v2 (depth comes from layering); kept for unredesigned pages */
+  --shadow-warm: 0 2px 6px rgb(43 26 18 / 0.08), 0 8px 24px rgb(43 26 18 / 0.08);
+  --shadow-warm-lg: 0 4px 12px rgb(43 26 18 / 0.1), 0 20px 48px rgb(43 26 18 / 0.14);
 
+  /* ---- Motion ---- */
   --ease-brand: cubic-bezier(0.2, 0.7, 0.3, 1);
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
 
   /* Basket count "bump" when an item is added */
   --animate-bump: bump 350ms var(--ease-brand);
@@ -33,35 +49,96 @@
   }
 }
 
+/* ---------- Type scale (fluid, 360px → 1440px) ---------- */
+@utility text-display-xl {
+  font-family: var(--font-heading);
+  font-size: clamp(3rem, 0.5rem + 10.5vw, 10rem);
+  line-height: 0.88;
+  letter-spacing: -0.04em;
+}
+@utility text-display-l {
+  font-family: var(--font-heading);
+  font-size: clamp(2.75rem, 1rem + 6vw, 6.5rem);
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+}
+@utility text-display-m {
+  font-family: var(--font-heading);
+  font-size: clamp(2.25rem, 1.25rem + 3vw, 4rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+@utility text-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 1.2rem + 0.8vw, 2rem);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+@utility text-body-l {
+  font-size: clamp(1.125rem, 1rem + 0.3vw, 1.3125rem);
+  line-height: 1.55;
+}
+@utility text-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  line-height: 1.2;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+@utility text-numeral {
+  font-family: var(--font-heading);
+  font-size: clamp(4.5rem, 2rem + 9vw, 12.5rem);
+  line-height: 0.8;
+  letter-spacing: -0.05em;
+}
+
+/* Fraunces voice: light, soft, high optical size — the v2 editorial register */
+@utility serif-editorial {
+  font-weight: 300;
+  font-variation-settings: "opsz" 144, "SOFT" 100;
+}
+
+/* Vertical rhythm between sections */
+@utility section-y {
+  padding-block: clamp(6rem, 3rem + 9vw, 12rem);
+}
+
 body {
-  background: var(--color-cream);
-  color: var(--color-brown);
+  background: var(--color-oat);
+  color: var(--color-cocoa);
   font-family: var(--font-sans);
 }
 
-h1,
-h2,
-h3,
-h4 {
-  font-family: var(--font-heading);
+::selection {
+  background: var(--color-plantain);
+  color: var(--color-cocoa);
 }
 
-/* Big display type: high optical size + a touch of softness for a warm, crafted feel */
+/* In the base layer so utilities (e.g. text-eyebrow's sans font) can override it on headings */
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-heading);
+  }
+}
+
+/* v1 display style — still used by pages not yet redesigned */
 .display {
   font-variation-settings: "opsz" 144, "SOFT" 60;
   letter-spacing: -0.035em;
   line-height: 0.92;
 }
 
-/* ---------- Background textures ---------- */
-
-/* Warm editorial grid: thin brown lines on cream, fading out at the edges */
-.texture-grid {
-  background-image:
-    linear-gradient(to right, rgb(59 36 22 / 0.07) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(59 36 22 / 0.07) 1px, transparent 1px);
-  background-size: 56px 56px;
-  mask-image: radial-gradient(ellipse 80% 70% at 30% 40%, black 30%, transparent 85%);
+/* ---------- Focus (WCAG: ≥3:1 against the background) ---------- */
+:focus-visible {
+  outline: 2px solid var(--color-terracotta);
+  outline-offset: 3px;
+}
+.on-dark :focus-visible {
+  outline-color: var(--color-plantain);
 }
 
 /* ---------- Motion ---------- */
@@ -71,8 +148,8 @@ h4 {
   opacity: 0;
   transform: translateY(28px);
   transition:
-    opacity 700ms var(--ease-brand),
-    transform 700ms var(--ease-brand);
+    opacity 800ms var(--ease-out-soft),
+    transform 800ms var(--ease-out-soft);
   transition-delay: var(--reveal-delay, 0ms);
 }
 .js .reveal[data-visible="true"] {
@@ -80,53 +157,71 @@ h4 {
   transform: none;
 }
 
-/* Divider diamonds: stagger in on load, then a slow shimmer wave travels along them */
-@keyframes diamond-in {
-  from {
-    opacity: 0;
-    transform: scale(0.4) rotate(-45deg);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
+/* Hero intro — plays once on load */
+@keyframes hero-image-in {
+  from { opacity: 0; transform: scale(1.08); }
+  to { opacity: 1; transform: scale(1); }
 }
-@keyframes diamond-shimmer {
-  0%,
-  80%,
-  100% {
-    fill-opacity: 0;
-  }
-  88% {
-    fill-opacity: 0.9;
-  }
+@keyframes hero-line-in {
+  from { transform: translateY(105%); }
+  to { transform: translateY(0); }
 }
-.diamond {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: diamond-in 500ms var(--ease-brand) both;
-  animation-delay: calc(var(--i) * 70ms + 300ms);
+@keyframes fade-up-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
 }
-.diamond-core {
-  animation: diamond-shimmer 5s ease-in-out infinite;
-  animation-delay: calc(var(--i) * 120ms + 1.5s);
+.hero-image {
+  animation: hero-image-in 1600ms var(--ease-out-soft) both;
+}
+/* Each headline line rises through a mask */
+.hero-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em; /* keeps descenders (g, y) inside the mask */
+  margin-bottom: -0.08em;
+}
+.hero-line > span {
+  display: inline-block;
+  animation: hero-line-in 1100ms var(--ease-out-soft) both;
+  animation-delay: var(--d, 0ms);
+}
+.fade-up {
+  animation: fade-up-in 900ms var(--ease-out-soft) both;
+  animation-delay: var(--d, 0ms);
+}
+
+/* Images that gently scale inside a still frame on hover/focus */
+.zoom-frame {
+  overflow: hidden;
+}
+.zoom-frame img {
+  transition: transform 900ms var(--ease-out-soft);
+}
+.zoom-frame:hover img,
+.zoom-frame:focus-within img {
+  transform: scale(1.04);
 }
 
 /* Shared press state for every button-like element */
 .press {
   transition:
-    transform 150ms var(--ease-brand),
-    background-color 200ms var(--ease-brand),
-    color 200ms var(--ease-brand),
-    border-color 200ms var(--ease-brand),
-    box-shadow 200ms var(--ease-brand);
+    transform 120ms var(--ease-brand),
+    background-color 240ms var(--ease-brand),
+    color 240ms var(--ease-brand),
+    border-color 240ms var(--ease-brand),
+    box-shadow 240ms var(--ease-brand);
 }
 .press:active {
-  transform: scale(0.96);
+  transform: scale(0.97);
 }
-.press:focus-visible {
-  outline: 2px solid var(--color-gold);
-  outline-offset: 3px;
+
+/* Add-to-basket morph: the Add pill gives way to the quantity stepper (and back) */
+@keyframes morph-in {
+  from { opacity: 0; transform: scale(0.88); }
+  to { opacity: 1; transform: none; }
+}
+.morph-in {
+  animation: morph-in 260ms var(--ease-out-soft) both;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -135,11 +230,18 @@ h4 {
     transform: none;
     transition: none;
   }
-  .diamond,
-  .diamond-core {
-    animation: none;
-  }
+  .hero-image,
+  .hero-line > span,
+  .fade-up,
+  .morph-in,
   .animate-bump {
     animation: none;
+  }
+  .zoom-frame img {
+    transition: none;
+  }
+  .zoom-frame:hover img,
+  .zoom-frame:focus-within img {
+    transform: none;
   }
 }
