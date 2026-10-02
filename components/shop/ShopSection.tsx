@@ -2,7 +2,7 @@ import Link from "next/link";
 import Reveal from "@/components/Reveal";
 import { CONTACT } from "@/lib/contact";
 import { categoryAnchor, getProducts, groupByCategory } from "@/lib/products";
-import { CHAPTERS, FEATURED_PRODUCT_NAME } from "@/lib/shop-content";
+import { CHAPTERS, FALLBACK_TINT, FEATURED_PRODUCT_NAME } from "@/lib/shop-content";
 import Chapter from "./Chapter";
 import ChapterIndex from "./ChapterIndex";
 import FeaturedProduct from "./FeaturedProduct";
@@ -69,7 +69,9 @@ export default async function ShopSection() {
           ))}
 
           {/* One shared detail panel (ingredients, allergens, storage) for every product */}
-          <ProductSheet />
+          <ProductSheet
+            entries={products.map((p) => ({ product: p, tint: CHAPTERS[p.category]?.tint ?? FALLBACK_TINT }))}
+          />
 
           {/* Quiet note: the catalogue isn't exhaustive */}
           <div className="mx-auto max-w-[1440px] px-4 pb-[clamp(4rem,2rem+6vw,8rem)] sm:px-8 lg:px-12">

@@ -71,7 +71,7 @@ export const STAND_IN_IMAGES: Record<string, StandIn> = {
   },
   gurundi: {
     src: gurundi, kind: "snack", shows: "coconut biscuits",
-    check: `Assumes gurundi is a coconut biscuit; the current description says “bean snack”. ${NOT_NIGERIAN}`,
+    check: `Research says gurundi is a thin coconut biscuit; confirm it matches yours. ${NOT_NIGERIAN}`,
     credit: { title: "Coconut biscuits", author: "Gaurav Dhwaj Khadka", ...BY_SA_4, source: "https://commons.wikimedia.org/w/index.php?curid=77074309" },
   },
   peanuts: {
@@ -79,9 +79,9 @@ export const STAND_IN_IMAGES: Record<string, StandIn> = {
     credit: { title: "Dry groundnut", author: "AgnesAbah", ...CC0, source: "https://commons.wikimedia.org/w/index.php?curid=159376092" },
   },
   "sisi-pelebe": {
-    src: sisiPelebe, kind: "ingredient", shows: "dough being rolled",
-    check: "No licensed photo of sisi pelebe was found, and the product itself is unconfirmed — ingredient photo for now.",
-    credit: { title: "Hands rolling dough", author: "Arina Krasnikova", ...PEXELS, source: "https://www.pexels.com/photo/5119847/" },
+    src: sisiPelebe, kind: "snack", shows: "peanut brittle (groundnut toffee)",
+    check: `Research says sisi pelebe is a groundnut toffee; this shows peanut brittle, the closest licensed match. ${NOT_NIGERIAN}`,
+    credit: { title: "Peanut Brittle", author: "youngthousands", license: "CC BY 2.0", licenseUrl: "https://creativecommons.org/licenses/by/2.0/", source: "https://commons.wikimedia.org/w/index.php?curid=148782179" },
   },
   "baba-dudu": {
     src: babaDudu, kind: "ingredient", shows: "brown sugar",

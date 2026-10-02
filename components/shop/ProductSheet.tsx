@@ -1,19 +1,75 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import AddToCartButton from "@/components/cart/AddToCartButton";
 import { CONTACT } from "@/lib/contact";
+import { productImageKey } from "@/lib/product-images";
 import { detailText, isConfirmed, productSheet, useProductSheet } from "@/lib/product-sheet";
+import type { Product } from "@/lib/types";
 import ProductVisual from "./ProductVisual";
 
 // Product detail panel (Phase 3): description, ingredients, allergens, storage and
 // pack size for every product, plus the add control. Bottom sheet on phones, side
 // panel from md up. Behaves like the basket drawer: Escape / backdrop close, focus
 // moves in and returns to the button that opened it, page behind doesn't scroll.
-export default function ProductSheet() {
+//
+// Each open panel has its own address (#product/milky-chin-chin): the phone's back
+// button closes it, and the link opens it directly, so a product can be shared.
+const HASH_PREFIX = "#product/";
+
+type Props = { entries: { product: Product; tint: string }[] };
+
+export default function ProductSheet({ entries }: Props) {
   const { product, tint, open } = useProductSheet();
   const closeRef = useRef<HTMLButtonElement>(null);
   const returnFocusTo = useRef<Element | null>(null);
+  const pushedHistory = useRef(false); // did opening the panel add a history entry?
+  const [copied, setCopied] = useState(false);
+
+  // Open the panel named in the address (on load, and on Back/Forward); close it when
+  // the address no longer names a product.
+  useEffect(() => {
+    function syncFromAddress() {
+      const hash = decodeURIComponent(window.location.hash);
+      if (!hash.startsWith(HASH_PREFIX)) {
+        pushedHistory.current = false;
+        productSheet.close();
+        return;
+      }
+      const match = entries.find((e) => productImageKey(e.product.name) === hash.slice(HASH_PREFIX.length));
+      if (match) productSheet.open(match.product, match.tint);
+    }
+    syncFromAddress();
+    window.addEventListener("popstate", syncFromAddress);
+    return () => window.removeEventListener("popstate", syncFromAddress);
+  }, [entries]);
+
+  // Keep the address in step with the panel
+  useEffect(() => {
+    if (!product) return;
+    const target = HASH_PREFIX + productImageKey(product.name);
+    const here = decodeURIComponent(window.location.hash);
+    if (open && here !== target) {
+      history.pushState(null, "", target);
+      pushedHistory.current = true;
+    } else if (!open && here.startsWith(HASH_PREFIX)) {
+      // Closed with ✕ / Escape / backdrop: undo our history entry, or just tidy the
+      // address if the visitor arrived on a product link.
+      if (pushedHistory.current) history.back();
+      else history.replaceState(null, "", window.location.pathname + window.location.search);
+      pushedHistory.current = false;
+    }
+  }, [open, product]);
+
+  async function copyLink() {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // Clipboard blocked: the address bar already shows the product link
+    }
+  }
 
   useEffect(() => {
     if (!open) return;
@@ -52,28 +108,43 @@ export default function ProductSheet() {
         className={`absolute flex flex-col bg-oat text-cocoa transition-[translate] duration-300 ease-brand motion-reduce:transition-none
           inset-x-0 bottom-0 max-h-[90dvh] rounded-t-2xl
           md:inset-x-auto md:inset-y-0 md:right-0 md:max-h-none md:w-full md:max-w-lg md:rounded-none
-          ${open ? "translate-x-0 translate-y-0" :"translate-y-full md:translate-y-0 md:translate-x-full"}`}
+          ${open ? "translate-x-0 translate-y-0" : "translate-y-full md:translate-y-0 md:translate-x-full"}`}
       >
         {product && (
           <>
             <div className="flex items-center justify-between gap-4 border-b border-cocoa/10 px-5 py-4 sm:px-6">
-              <p className="text-eyebrow text-cocoa-soft">{product.category}</p>
-              <button
-                ref={closeRef}
-                type="button"
-                onClick={productSheet.close}
-                className="press flex h-11 w-11 items-center justify-center rounded-full border border-cocoa/20 text-lg hover:border-cocoa hover:bg-cocoa hover:text-oat"
-                aria-label="Close product details"
-              >
-                ✕
-              </button>
+              <p className="text-eyebrow min-w-0 text-cocoa-soft">{product.category}</p>
+              <div className="flex shrink-0 items-center gap-1 sm:gap-2">
+                <button
+                  type="button"
+                  onClick={copyLink}
+                  className="press h-11 rounded-full px-3 text-sm whitespace-nowrap font-medium text-cocoa-soft underline decoration-cocoa/25 underline-offset-4 hover:text-cocoa hover:decoration-terracotta"
+                >
+                  {copied ? "Link copied ✓" : "Copy link"}
+                </button>
+                <span className="sr-only" aria-live="polite">
+                  {copied ? `Link to ${product.name} copied` : ""}
+                </span>
+                <button
+                  ref={closeRef}
+                  type="button"
+                  onClick={productSheet.close}
+                  className="press flex h-11 w-11 items-center justify-center rounded-full border border-cocoa/20 text-lg hover:border-cocoa hover:bg-cocoa hover:text-oat"
+                  aria-label="Close product details"
+                >
+                  ✕
+                </button>
+              </div>
             </div>
 
             <div className="flex-1 overflow-y-auto overscroll-contain px-5 pt-6 pb-8 sm:px-6">
               <div className="grid grid-cols-[7rem_1fr] items-start gap-5 sm:grid-cols-[9rem_1fr]">
                 <ProductVisual product={product} tint={tint} sizes="9rem" />
                 <div>
-                  <h2 id="product-sheet-title" className="text-display-m serif-editorial text-[clamp(1.75rem,1.25rem+2vw,2.5rem)]">
+                  <h2
+                    id="product-sheet-title"
+                    className="text-display-m serif-editorial text-[clamp(1.75rem,1.25rem+2vw,2.5rem)]"
+                  >
                     {product.name}
                   </h2>
                   <p className="mt-3 flex items-baseline gap-3">
@@ -87,8 +158,8 @@ export default function ProductSheet() {
 
               {researched && (
                 <p className="mt-8 rounded-lg bg-oat-deep px-4 py-3 text-sm text-cocoa">
-                  <strong className="font-semibold">Typical recipe — not yet confirmed by our supplier.</strong>{" "}
-                  We researched how this snack is usually made. Recipes and frying oils vary, so our own product may
+                  <strong className="font-semibold">Typical recipe — not yet confirmed by our supplier.</strong> We
+                  researched how this snack is usually made. Recipes and frying oils vary, so our own product may
                   differ, and traces of other allergens (especially peanuts) are possible. Please don&rsquo;t rely on
                   this if you have an allergy.
                 </p>
