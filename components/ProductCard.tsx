@@ -1,3 +1,5 @@
+import Image from "next/image";
+import { productImageSrc } from "@/lib/product-images";
 import type { Product } from "@/lib/types";
 import AddToCartButton from "./cart/AddToCartButton";
 import { CrunchyIcon, iconForCategory } from "./SnackIcons";
@@ -20,13 +22,29 @@ export default function ProductCard({ product, number, toneIndex }: Props) {
   const tone = tones[toneIndex % tones.length];
   const Icon = iconForCategory[product.category as keyof typeof iconForCategory] ?? CrunchyIcon;
   const soldOut = !product.available;
+  const photo = productImageSrc(product.name);
 
   return (
     <article className="group flex h-full flex-row overflow-hidden sm:flex-col rounded-[1.75rem] bg-cream shadow-warm ring-1 ring-brown/5 transition duration-300 ease-brand hover:-translate-y-1 hover:shadow-warm-lg">
-      {/* Placeholder visual: woven texture + line-art icon on a cream medallion */}
-      <div className={`relative flex w-[38%] shrink-0 items-center justify-center overflow-hidden sm:aspect-[4/3] sm:w-auto ${tone.bg} ${soldOut ? "grayscale-[60%]" : ""}`}>
-        <WovenTexture id={`weave-${product.id}`} className="text-cream opacity-[0.16]" />
-        <span className="absolute top-3 left-3.5 font-heading text-xs sm:top-4 sm:left-5 sm:text-sm font-semibold text-cream/85">
+      {/* Product photo if one exists in public/images/products/ (see docs/content-guide.md);
+          otherwise the placeholder: woven texture + line-art icon on a cream medallion. */}
+      <div className={`relative flex min-h-36 w-[38%] shrink-0 items-center justify-center overflow-hidden sm:aspect-[4/3] sm:w-auto ${tone.bg} ${soldOut ? "grayscale-[60%]" : ""}`}>
+        {photo ? (
+          <Image
+            src={photo}
+            alt={product.name}
+            fill
+            sizes="(min-width: 1280px) 290px, (min-width: 640px) 45vw, 38vw"
+            className="object-cover transition duration-500 ease-brand group-hover:scale-105"
+          />
+        ) : (
+          <WovenTexture id={`weave-${product.id}`} className="text-cream opacity-[0.16]" />
+        )}
+        <span
+          className={`absolute top-3 left-3.5 font-heading text-xs sm:top-4 sm:left-5 sm:text-sm font-semibold text-cream/85 ${
+            photo ? "rounded-full bg-brown/55 px-2 py-0.5 backdrop-blur-sm" : ""
+          }`}
+        >
           {String(number).padStart(2, "0")}
         </span>
         {soldOut && (
@@ -34,10 +52,12 @@ export default function ProductCard({ product, number, toneIndex }: Props) {
             Sold out
           </span>
         )}
-        <div className="relative flex h-20 w-20 items-center justify-center rounded-full bg-cream ring-1 ring-cream/40 ring-offset-4 sm:h-32 sm:w-32 sm:ring-offset-8 ring-offset-transparent transition duration-500 ease-brand group-hover:scale-105 group-hover:rotate-3">
-          <span className={`absolute inset-2 rounded-full border border-dashed border-current opacity-30 ${tone.icon}`} />
-          <Icon className={`h-12 w-12 sm:h-20 sm:w-20 ${tone.icon}`} />
-        </div>
+        {!photo && (
+          <div className="relative flex h-20 w-20 items-center justify-center rounded-full bg-cream ring-1 ring-cream/40 ring-offset-4 sm:h-32 sm:w-32 sm:ring-offset-8 ring-offset-transparent transition duration-500 ease-brand group-hover:scale-105 group-hover:rotate-3">
+            <span className={`absolute inset-2 rounded-full border border-dashed border-current opacity-30 ${tone.icon}`} />
+            <Icon className={`h-12 w-12 sm:h-20 sm:w-20 ${tone.icon}`} />
+          </div>
+        )}
       </div>
 
       <div className="flex min-w-0 flex-1 flex-col p-4 sm:p-6">

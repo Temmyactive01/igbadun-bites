@@ -50,6 +50,41 @@ These aren't cut because they don't matter — they matter a lot for the real
 business — but they need content (founder story, delivery areas, policies) we
 don't have yet, and trying to fake them would look worse than not having them.
 
+## Phase 2: visual identity redesign (after the course submission)
+Goal: elevate the site from "well-customised template" to a flagship, premium,
+editorial brand experience — while remaining an excellent, accessible shop.
+Creative direction and tokens: **style.md (v2)**. Full audit, homepage composition,
+motion and responsive plan: **docs/redesign/phase-0-audit.md**.
+
+**Status:** Phase 0 (audit + direction) written 2 Oct 2026 — awaiting approval.
+
+**Must not break:** Supabase data and RLS, Google sign-in, product data, basket,
+checkout and Paystack verification, confirmation emails, order history. The redesign
+changes presentation and composition, not business logic.
+
+**Delivery:** on a `redesign` branch, each phase reviewed on a Netlify deploy preview
+before merging to `main`. Start only after the course submission is safe (tag the
+submitted state).
+
+**Phases (one at a time, each approved before the next):**
+1. Foundations + homepage (tokens, fonts, header, cinematic hero, manifesto, story,
+   occasions)
+2. Product discovery (category chapters, featured product, rails, chapter index)
+3. Product cards + product detail sheet (sensory copy, morphing add-to-basket,
+   **ingredients/allergens/storage visible for every product**)
+4. Cart, checkout, orders (reskin; same logic)
+5. Footer + final motion/accessibility polish
+
+**New requirements introduced by the redesign:**
+- Product detail view showing description, ingredients, allergens, storage and pack
+  size (data already exists; currently not displayed anywhere).
+- Brand story section built for the owner's real story (see open items); placeholder
+  copy must not invent history.
+- Licensed stock imagery for atmosphere only, credited in
+  `public/images/editorial/CREDITS.md`; never presented as the actual product.
+- WCAG 2.2 AA, keyboard access, reduced-motion support; mobile composition designed
+  separately, app-ready patterns.
+
 ## Product catalog (placeholder prices — CONFIRM WITH BUSINESS OWNER)
 All prices are realistic placeholders in GBP, clearly flagged for the business
 owner to correct before real launch.
@@ -82,7 +117,10 @@ supplier" etc.) — so the data model is ready for real content later, not rebui
 - Confirmed prices and pack sizes
 - Confirm/correct the product descriptions for Gurundi, Kokoro Egba, Dankwa, and
   Sisi Pelebe — the current ones are placeholder guesses, not the real copy
-- Founder story / business location
+- Founder story / business location — now also needed for the redesign's brand
+  story section
+- Real ingredients, allergen and storage information for every product — the
+  redesign will display these, so placeholders become customer-facing
 - Social handles (phone and email now confirmed — see footer, MVP item 8)
 - Delivery areas, charges, collection arrangements
 - Payment/booking/cancellation terms
