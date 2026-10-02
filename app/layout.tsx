@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter } from "next/font/google";
+import { Fraunces, Instrument_Sans } from "next/font/google";
 import CartDrawer from "@/components/cart/CartDrawer";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
@@ -14,22 +14,23 @@ const fraunces = Fraunces({
   axes: ["opsz", "SOFT"],
 });
 
-const inter = Inter({
-  variable: "--font-inter",
+// UI / body face (v2): restrained, characterful, tabular figures for prices
+const instrument = Instrument_Sans({
+  variable: "--font-instrument",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
   title: "Igbadun Bites — Nigerian snacks, made with love",
   description:
-    "Bringing Back Memories, One Bite at a Time. Chin chin, plantain chips, kokoro, coconut candy and more — Nigerian snacks delivered across the UK.",
+    "Bringing Back Memories, One Bite at a Time. Chin chin, plantain chips, kokoro, coconut candy and more — Nigerian snacks for pickup or delivery.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en-GB"
-      className={`${fraunces.variable} ${inter.variable} h-full antialiased`}
+      className={`${fraunces.variable} ${instrument.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>
