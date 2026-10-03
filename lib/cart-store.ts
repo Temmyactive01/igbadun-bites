@@ -19,13 +19,16 @@ export type CartItem = {
   quantity: number;
 };
 
-type CartState = { items: CartItem[]; open: boolean };
+// syncing: a signed-in basket is still loading for the first time on this browser
+// (nothing cached yet) — screens show a loading state instead of "basket is empty".
+type CartState = { items: CartItem[]; open: boolean; syncing: boolean };
 
 export const MAX_QUANTITY = 20;
 const STORAGE_KEY = "igbadun-basket-v1"; // signed-out basket
 const USER_CACHE_PREFIX = `${STORAGE_KEY}:user:`; // + user id — cache of a signed-in basket
 const ACTIVE_USER_KEY = `${STORAGE_KEY}:active-user`; // which signed-in basket was last shown
-const EMPTY: CartState = { items: [], open: false };
+const EMPTY: CartState = { items: [], open: false, syncing: false };
+const SYNC_TIMEOUT_MS = 5000; // never show "loading" longer than this, whatever happens
 
 let state: CartState = EMPTY;
 let loaded = false;
@@ -85,7 +88,11 @@ function load() {
   } else if (lastUser) {
     forgetSignedInBaskets(); // signed out since the last visit
   }
-  state = { ...state, items: readItems(storageKey()) };
+  const items = readItems(storageKey());
+  // Signed in but nothing cached on this browser yet: the server basket is on its way
+  const syncing = hasAuthCookie() && items.length === 0;
+  state = { ...state, items, syncing };
+  if (syncing) setTimeout(() => cartSyncHooks.doneSyncing(), SYNC_TIMEOUT_MS);
 
   // Keep the basket in sync if the visitor has the shop open in two tabs
   window.addEventListener("storage", (e) => {
@@ -218,12 +225,17 @@ export const cartSyncHooks = {
     userId = null;
     forgetSignedInBaskets();
     removeKey(STORAGE_KEY);
-    setState({ ...state, items: [] }, false);
+    setState({ ...state, items: [], syncing: false }, false);
   },
 
   // Replace the basket with the server's copy (and refresh the per-user cache)
   replaceItems(items: CartItem[]) {
-    if (userId) setState({ ...state, items });
+    if (userId) setState({ ...state, items, syncing: false });
+  },
+
+  // First load finished (or failed, or turned out to be signed out) — stop showing "loading"
+  doneSyncing() {
+    if (state.syncing) setState({ ...state, syncing: false }, false);
   },
 
   onChange(handler: ChangeHandler) {

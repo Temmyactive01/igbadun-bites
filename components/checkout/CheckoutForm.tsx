@@ -16,7 +16,7 @@ const inputClass = fieldInput;
 const legendClass = "text-title serif-editorial";
 
 export default function CheckoutForm({ defaultName, email }: Props) {
-  const { items, subtotalPence } = useCart();
+  const { items, subtotalPence, syncing } = useCart();
   // The basket lives in the browser, so wait until we're in the browser before
   // deciding it's empty (avoids an "empty basket" flash on load).
   const isClient = useSyncExternalStore(noop, () => true, () => false);
@@ -57,7 +57,11 @@ export default function CheckoutForm({ defaultName, email }: Props) {
     }
   }
 
-  if (!isClient) return <div className="mt-12 h-96 animate-pulse rounded-lg bg-oat-deep/60" aria-hidden />;
+  // Also wait while a signed-in basket loads for the first time on this browser, so it
+  // never flashes "Your basket is empty" before the items arrive.
+  if (!isClient || (syncing && items.length === 0)) {
+    return <div className="mt-12 h-96 animate-pulse rounded-lg bg-oat-deep/60" aria-hidden />;
+  }
 
   if (items.length === 0) {
     return (

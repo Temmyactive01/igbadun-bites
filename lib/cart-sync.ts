@@ -50,9 +50,10 @@ export function startCartSync() {
 
 // Handle sign-in / sign-out / account switch, one at a time
 function onSession(session: Session | null) {
-  sessionTask = sessionTask.then(() => applySession(session?.user?.id ?? null)).catch((err) => {
-    console.error("Basket sync:", err);
-  });
+  sessionTask = sessionTask
+    .then(() => applySession(session?.user?.id ?? null))
+    .catch((err) => console.error("Basket sync:", err))
+    .finally(() => store.doneSyncing()); // never leave screens on "loading"
 }
 
 async function applySession(next: string | null) {
@@ -123,6 +124,7 @@ async function refresh(user: string) {
     .order("updated_at", { ascending: true });
   if (error) {
     console.error("Basket sync: could not load basket:", error.message);
+    store.doneSyncing();
     return;
   }
   if (user !== activeUser || pendingWrites > 0) return; // stale — a newer state is on its way
