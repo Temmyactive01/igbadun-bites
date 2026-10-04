@@ -42,3 +42,4 @@ next-env.d.ts
 
 # generated at build time by scripts/list-product-images.mjs
 /lib/generated/
+/public/product-images.json

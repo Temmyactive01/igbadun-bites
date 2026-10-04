@@ -147,7 +147,9 @@ locally first, run `npm run dev` and open http://localhost:3000.
 - `scripts/list-product-images.mjs` runs automatically before `npm run dev` and
   `npm run build`. It lists the files in `public/images/products/` and writes
   `lib/generated/product-images.json` (generated, git-ignored). This is needed
-  because on Netlify the running site can't look inside `public/`.
+  because on Netlify the running site can't look inside `public/`. It also writes
+  the same list to `public/product-images.json` (generated, git-ignored), which
+  the mobile app reads — so a photo added here shows in the app too.
 - `lib/product-images.ts` turns a product name into its file name and returns
   the photo URL (or `null`). `components/ProductCard.tsx` shows the photo with
   `next/image` when there is one, otherwise the icon.
