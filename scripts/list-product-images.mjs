@@ -3,8 +3,10 @@
 // products have a photo. (On Netlify the running site can't look inside
 // public/, so this has to happen at build time.)
 //
-// Writes lib/generated/product-images.json, e.g. { "milky-chin-chin": "milky-chin-chin.jpg" }
-// That file is generated — don't edit it, and it isn't committed to git.
+// Writes lib/generated/product-images.json, e.g. { "milky-chin-chin": "milky-chin-chin.jpg" },
+// and the same list to public/product-images.json, which the mobile app reads
+// (https://igbadun-bites.netlify.app/product-images.json) so it shows exactly the
+// same photos. Both files are generated — don't edit them; they aren't committed to git.
 import { mkdirSync, readdirSync, writeFileSync, existsSync } from "node:fs";
 
 const DIR = "public/images/products";
@@ -21,4 +23,5 @@ for (const file of files.sort()) {
 
 mkdirSync(OUT_DIR, { recursive: true });
 writeFileSync(`${OUT_DIR}/product-images.json`, JSON.stringify(map, null, 2) + "\n");
+writeFileSync("public/product-images.json", JSON.stringify(map, null, 2) + "\n");
 console.log(`[product images] ${files.length} photo(s) found in ${DIR}`);
