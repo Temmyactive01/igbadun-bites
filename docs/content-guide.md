@@ -33,7 +33,7 @@ spaces**, plus `.jpg`. It must match the product name in Supabase exactly
 | Donkwa | `donkwa.jpg` ✓ added |
 | Flakes Chin Chin | `flakes-chin-chin.jpg` |
 | Gurundi | `gurundi.jpg` |
-| Kokoro | `kokoro.jpg` — ready in `pending-photos/` (not in git); move it here when Kokoro launches |
+| Kokoro | `kokoro.jpg` ✓ added (shown as “Coming soon” until its details are ready) |
 | Kokoro Egba | `kokoro-egba.jpg` ✓ added |
 | Peanuts | `peanuts.jpg` |
 | Plantain Chips | `plantain-chips.jpg` |

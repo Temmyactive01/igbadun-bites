@@ -44,6 +44,9 @@ export function detailText(value: string | null | undefined): string | null {
   return text.replace(/^(ingredients|allergens?|allergen info|storage)\s*:\s*/i, "");
 }
 
+// A product announced before its price and details exist (see supabase/008_coming_soon.sql)
+export const isComingSoon = (product: Product): boolean => product.coming_soon === true;
+
 // Safe default: only an explicit "confirmed" (owner sign-off) counts as confirmed.
 export function isConfirmed(product: Product): boolean {
   return product.details_status === "confirmed";

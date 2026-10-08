@@ -7,6 +7,7 @@ import QuantityStepper from "./QuantityStepper";
 type Props = {
   item: Omit<CartItem, "quantity">;
   soldOut?: boolean;
+  comingSoon?: boolean; // announced, not yet for sale: shows "Coming soon", never adds
   // "tile": compact control for product tiles · "feature": large control (featured product, detail panel)
   variant?: "tile" | "feature";
 };
@@ -14,7 +15,7 @@ type Props = {
 // Add-to-basket that morphs into a − qty + stepper once the product is in the basket
 // (Phase 3). The quantity comes from the basket itself, so the tile, the detail panel
 // and the basket drawer always agree. Taking the quantity to 0 morphs back to "Add".
-export default function AddToCartButton({ item, soldOut = false, variant = "tile" }: Props) {
+export default function AddToCartButton({ item, soldOut = false, comingSoon = false, variant = "tile" }: Props) {
   const { items } = useCart();
   const quantity = items.find((i) => i.productId === item.productId)?.quantity ?? 0;
 
@@ -47,12 +48,12 @@ export default function AddToCartButton({ item, soldOut = false, variant = "tile
     </span>
   );
 
-  if (soldOut) {
+  if (comingSoon || soldOut) {
     return (
       <span
         className={`inline-flex ${height} items-center rounded-full border border-cocoa/15 px-4 text-sm font-medium text-cocoa-soft`}
       >
-        Sold out
+        {comingSoon ? "Coming soon" : "Sold out"}
       </span>
     );
   }

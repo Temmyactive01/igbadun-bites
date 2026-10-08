@@ -18,7 +18,7 @@ export default async function ShopSection() {
   const groups = groupByCategory(products);
   const featured =
     products.find((p) => productImageKey(p.name) === productImageKey(FEATURED_PRODUCT_NAME) && p.available) ??
-    products.find((p) => p.available);
+    products.find((p) => p.available && !p.coming_soon);
   const count = numberWords[products.length] ?? String(products.length);
 
   return (

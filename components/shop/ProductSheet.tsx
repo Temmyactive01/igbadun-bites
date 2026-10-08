@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import AddToCartButton from "@/components/cart/AddToCartButton";
 import { CONTACT } from "@/lib/contact";
 import { currentProductKey, productImageKey } from "@/lib/product-images";
-import { detailText, isConfirmed, productSheet, useProductSheet } from "@/lib/product-sheet";
+import { detailText, isComingSoon, isConfirmed, productSheet, useProductSheet } from "@/lib/product-sheet";
 import { useDialog } from "@/lib/use-dialog";
 import type { Product } from "@/lib/types";
 import ProductVisual from "./ProductVisual";
@@ -84,7 +84,8 @@ export default function ProductSheet({ entries }: Props) {
   const allergens = detailText(product?.allergens);
   const storage = detailText(product?.storage_guidance);
   // Researched typical-recipe info is labelled as such until the owner confirms it
-  const researched = !!product && !isConfirmed(product) && !!(ingredients || allergens || storage);
+  const comingSoon = !!product && isComingSoon(product);
+  const researched = !!product && !comingSoon && !isConfirmed(product) && !!(ingredients || allergens || storage);
   const pending = <span className="italic">Not yet confirmed — we&rsquo;re checking this with our supplier.</span>;
 
   return (
@@ -142,10 +143,14 @@ export default function ProductSheet({ entries }: Props) {
                   >
                     {product.name}
                   </h2>
-                  <p className="mt-3 flex items-baseline gap-3">
-                    <span className="font-heading text-2xl tabular-nums">£{Number(product.price_gbp).toFixed(2)}</span>
-                    <span className="text-sm text-cocoa-soft">{product.pack_size}</span>
-                  </p>
+                  {comingSoon ? (
+                    <p className="text-eyebrow mt-4 text-terracotta">Coming soon</p>
+                  ) : (
+                    <p className="mt-3 flex items-baseline gap-3">
+                      <span className="font-heading text-2xl tabular-nums">£{Number(product.price_gbp).toFixed(2)}</span>
+                      <span className="text-sm text-cocoa-soft">{product.pack_size}</span>
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -160,6 +165,12 @@ export default function ProductSheet({ entries }: Props) {
                 </p>
               )}
 
+              {comingSoon ? (
+                // Price, pack size, ingredients, allergens and storage aren't ready yet
+                <p className="mt-8 border-y border-cocoa/10 py-4 text-cocoa-soft">
+                  Ingredients, allergens and storage details are coming soon.
+                </p>
+              ) : (
               <dl className={`${researched ? "mt-6" : "mt-8"} divide-y divide-cocoa/10 border-y border-cocoa/10`}>
                 <div className="py-4">
                   <dt className="text-eyebrow text-cocoa">Ingredients</dt>
@@ -180,6 +191,7 @@ export default function ProductSheet({ entries }: Props) {
                   <dd className="mt-2 text-cocoa-soft">{product.pack_size}</dd>
                 </div>
               </dl>
+              )}
 
               <p className="mt-6 border-l-2 border-terracotta pl-4 text-sm text-cocoa">
                 <strong className="font-semibold">Allergies or dietary needs?</strong> Please{" "}
@@ -199,6 +211,7 @@ export default function ProductSheet({ entries }: Props) {
             <div className="border-t border-cocoa/10 bg-oat-deep/60 px-5 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:px-6">
               <AddToCartButton
                 variant="feature"
+                comingSoon={comingSoon}
                 soldOut={!product.available}
                 item={{
                   productId: product.id,
