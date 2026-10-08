@@ -86,7 +86,11 @@ export default function ProductSheet({ entries }: Props) {
   const storage = detailText(product?.storage_guidance);
   // Researched typical-recipe info is labelled as such until the owner confirms it
   const comingSoon = !!product && isComingSoon(product);
-  const researched = !!product && !comingSoon && !isConfirmed(product) && !!(ingredients || allergens || storage);
+  const hasDetails = !!(ingredients || allergens || storage);
+  const researched = !!product && !comingSoon && !isConfirmed(product) && hasDetails;
+  // No ingredients, allergens or storage yet (a new or coming-soon product): one notice instead of the rows
+  const detailsPending = comingSoon || !hasDetails;
+  const packSize = product?.pack_size.trim() ?? "";
   const pending = <span className="italic">Not yet confirmed — we&rsquo;re checking this with our supplier.</span>;
 
   return (
@@ -144,12 +148,11 @@ export default function ProductSheet({ entries }: Props) {
                   >
                     {product.name}
                   </h2>
-                  {comingSoon ? (
-                    <p className="text-eyebrow mt-4 text-terracotta">Coming soon</p>
-                  ) : (
+                  {/* Coming soon: no price yet (the photo label and the button already say so) */}
+                  {!comingSoon && (
                     <p className="mt-3 flex items-baseline gap-3">
                       <span className="font-heading text-2xl tabular-nums">£{Number(product.price_gbp).toFixed(2)}</span>
-                      <span className="text-sm text-cocoa-soft">{product.pack_size}</span>
+                      {packSize && <span className="text-sm text-cocoa-soft">{packSize}</span>}
                     </p>
                   )}
                 </div>
@@ -166,10 +169,11 @@ export default function ProductSheet({ entries }: Props) {
                 </p>
               )}
 
-              {comingSoon ? (
-                // Price, pack size, ingredients, allergens and storage aren't ready yet
-                <p className="mt-8 border-y border-cocoa/10 py-4 text-cocoa-soft">
-                  Ingredients, allergens and storage details are coming soon.
+              {detailsPending ? (
+                <p className="mt-8 rounded-lg bg-oat-deep px-4 py-3 text-sm text-cocoa">
+                  <strong className="font-semibold">Ingredients and allergens coming soon.</strong> We&rsquo;re still
+                  confirming this snack&rsquo;s ingredients, allergens and storage with our supplier, so please
+                  don&rsquo;t order it if you have an allergy until you&rsquo;ve checked with us.
                 </p>
               ) : (
               <dl className={`${researched ? "mt-6" : "mt-8"} divide-y divide-cocoa/10 border-y border-cocoa/10`}>
@@ -187,10 +191,12 @@ export default function ProductSheet({ entries }: Props) {
                   <dt className="text-eyebrow text-cocoa">Storage</dt>
                   <dd className="mt-2 text-cocoa-soft">{storage ?? pending}</dd>
                 </div>
-                <div className="py-4">
-                  <dt className="text-eyebrow text-cocoa">Pack size</dt>
-                  <dd className="mt-2 text-cocoa-soft">{product.pack_size}</dd>
-                </div>
+                {packSize && (
+                  <div className="py-4">
+                    <dt className="text-eyebrow text-cocoa">Pack size</dt>
+                    <dd className="mt-2 text-cocoa-soft">{packSize}</dd>
+                  </div>
+                )}
               </dl>
               )}
 

@@ -48,7 +48,7 @@ export function orderConfirmationEmail(order: ConfirmationOrder) {
     "",
     `Your order ${ref} is confirmed and paid.`,
     "",
-    ...order.items.map((i) => `${i.quantity} x ${i.name} (${i.pack_size}) — ${formatPence(pence(i.unit_price_gbp) * i.quantity)}`),
+    ...order.items.map((i) => `${i.quantity} x ${i.name}${i.pack_size ? ` (${i.pack_size})` : ""} — ${formatPence(pence(i.unit_price_gbp) * i.quantity)}`),
     "",
     `Total paid: ${total}${isTestNaira ? ` (test payment charged as ${naira} at a demo rate)` : ""}`,
     order.fulfilment === "pickup" ? "Pickup" : `Delivery to: ${address}`,
@@ -67,7 +67,7 @@ export function orderConfirmationEmail(order: ConfirmationOrder) {
       <tr>
         <td style="padding:12px 0;border-bottom:1px solid ${C.creamDeep};font-family:${sans};font-size:15px;color:${C.brown};">
           <strong style="font-family:${serif};font-size:16px;">${esc(i.name)}</strong><br>
-          <span style="color:${C.brownSoft};font-size:13px;">${i.quantity} × ${formatPence(pence(i.unit_price_gbp))} · ${esc(i.pack_size)}</span>
+          <span style="color:${C.brownSoft};font-size:13px;">${i.quantity} × ${formatPence(pence(i.unit_price_gbp))}${i.pack_size ? ` · ${esc(i.pack_size)}` : ""}</span>
         </td>
         <td align="right" style="padding:12px 0;border-bottom:1px solid ${C.creamDeep};font-family:${sans};font-size:15px;color:${C.brown};white-space:nowrap;">
           ${formatPence(pence(i.unit_price_gbp) * i.quantity)}
