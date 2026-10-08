@@ -47,5 +47,6 @@ export const FALLBACK_TINT = "#e8dbc5";
 
 // The product given its own spread at the top of the shop ("Start here").
 // Change this name to feature a different product; if it isn't found or is sold
-// out, the first available product is used instead.
-export const FEATURED_PRODUCT_NAME = "Milky Chin Chin";
+// out, the first available product is used instead. Matched like photos and links
+// (lib/product-images.ts), so it still finds the product under its previous name.
+export const FEATURED_PRODUCT_NAME = "Chin Chin";

@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import AddToCartButton from "@/components/cart/AddToCartButton";
 import { CONTACT } from "@/lib/contact";
-import { productImageKey } from "@/lib/product-images";
+import { currentProductKey, productImageKey } from "@/lib/product-images";
 import { detailText, isConfirmed, productSheet, useProductSheet } from "@/lib/product-sheet";
 import { useDialog } from "@/lib/use-dialog";
 import type { Product } from "@/lib/types";
@@ -37,8 +37,13 @@ export default function ProductSheet({ entries }: Props) {
         productSheet.close();
         return;
       }
-      const match = entries.find((e) => productImageKey(e.product.name) === hash.slice(HASH_PREFIX.length));
-      if (match) productSheet.open(match.product, match.tint);
+      const linked = hash.slice(HASH_PREFIX.length);
+      const key = currentProductKey(linked);
+      const match = entries.find((e) => productImageKey(e.product.name) === key);
+      if (!match) return;
+      // A link from before a product was renamed: show the product's current link instead
+      if (key !== linked) history.replaceState(null, "", window.location.pathname + window.location.search + HASH_PREFIX + key);
+      productSheet.open(match.product, match.tint);
     }
     syncFromAddress();
     window.addEventListener("popstate", syncFromAddress);

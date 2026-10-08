@@ -25,18 +25,21 @@ spaces**, plus `.jpg`. It must match the product name in Supabase exactly
 | Product (as in Supabase) | Photo file name |
 |---|---|
 | Akara Ogbomosho | `akara-ogbomosho.jpg` |
-| Baba Dudu | `baba-dudu.jpg` |
+| Babadudu | `babadudu.jpg` ✓ added |
+| Chin Chin | `chin-chin.jpg` ✓ added |
 | Coconut Candy | `coconut-candy.jpg` |
-| Cocoyam Chips | `cocoyam-chips.jpg` |
+| Cocoyam Chips | `cocoyam-chips.jpg` ✓ added |
 | Condensed Milk Sweet | `condensed-milk-sweet.jpg` |
-| Dankwa | `dankwa.jpg` |
+| Donkwa | `donkwa.jpg` ✓ added |
 | Flakes Chin Chin | `flakes-chin-chin.jpg` |
 | Gurundi | `gurundi.jpg` |
-| Kokoro Egba | `kokoro-egba.jpg` |
-| Milky Chin Chin | `milky-chin-chin.jpg` |
+| Kokoro | `kokoro.jpg` — ready in `pending-photos/` (not in git); move it here when Kokoro launches |
+| Kokoro Egba | `kokoro-egba.jpg` ✓ added |
 | Peanuts | `peanuts.jpg` |
 | Plantain Chips | `plantain-chips.jpg` |
-| Sisi Pelebe | `sisi-pelebe.jpg` |
+| Sisi Pelebe | `sisi-pelebe.jpg` ✓ added |
+
+✓ added = the owner's own photo is in place (October 2026).
 
 **New product added in Supabase later?** Same rule: "Chin Chin Gift Box" →
 `chin-chin-gift-box.jpg`. Any character that isn't a letter or number becomes
