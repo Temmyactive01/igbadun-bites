@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { productImageKey, productImageSrc } from "@/lib/product-images";
-import { isComingSoon } from "@/lib/product-sheet";
+import { isComingSoon } from "@/lib/product-status";
 import { STAND_IN_IMAGES } from "@/lib/stand-in-images";
 import type { Product } from "@/lib/types";
 

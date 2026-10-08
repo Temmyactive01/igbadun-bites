@@ -1,6 +1,6 @@
 import AddToCartButton from "@/components/cart/AddToCartButton";
 import type { Product } from "@/lib/types";
-import { isComingSoon } from "@/lib/product-sheet";
+import { isComingSoon } from "@/lib/product-status";
 import DetailsTrigger from "./DetailsTrigger";
 import ProductVisual from "./ProductVisual";
 
