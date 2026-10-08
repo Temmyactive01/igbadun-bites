@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Reveal from "@/components/Reveal";
 import { categoryAnchor } from "@/lib/products";
+import { countForSale } from "@/lib/product-status";
 import { CHAPTERS, FALLBACK_TINT } from "@/lib/shop-content";
 import type { Product } from "@/lib/types";
 import ProductGrid from "./ProductGrid";
@@ -15,6 +16,7 @@ export default function Chapter({ number, category, products }: Props) {
   const id = categoryAnchor(category);
   const title = content?.title ?? category;
   const flip = number % 2 === 0; // alternate the image side on desktop
+  const forSale = countForSale(products); // coming-soon products aren't counted
 
   return (
     <section id={id} aria-labelledby={`${id}-title`} className="section-y scroll-mt-28 lg:scroll-mt-36">
@@ -28,7 +30,7 @@ export default function Chapter({ number, category, products }: Props) {
               </span>
               <div className="pt-1">
                 <p className="text-eyebrow text-cocoa-soft">
-                  Chapter {String(number).padStart(2, "0")} · {products.length} {products.length === 1 ? "snack" : "snacks"}
+                  Chapter {String(number).padStart(2, "0")} · {forSale} {forSale === 1 ? "snack" : "snacks"}
                 </p>
                 <h2 id={`${id}-title`} className="text-display-l serif-editorial mt-4">
                   {title}

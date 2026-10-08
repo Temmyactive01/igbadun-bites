@@ -3,8 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import AddToCartButton from "@/components/cart/AddToCartButton";
 import { CONTACT } from "@/lib/contact";
-import { productImageKey } from "@/lib/product-images";
+import { currentProductKey, productImageKey } from "@/lib/product-images";
 import { detailText, isConfirmed, productSheet, useProductSheet } from "@/lib/product-sheet";
+import { isComingSoon } from "@/lib/product-status";
 import { useDialog } from "@/lib/use-dialog";
 import type { Product } from "@/lib/types";
 import ProductVisual from "./ProductVisual";
@@ -37,8 +38,13 @@ export default function ProductSheet({ entries }: Props) {
         productSheet.close();
         return;
       }
-      const match = entries.find((e) => productImageKey(e.product.name) === hash.slice(HASH_PREFIX.length));
-      if (match) productSheet.open(match.product, match.tint);
+      const linked = hash.slice(HASH_PREFIX.length);
+      const key = currentProductKey(linked);
+      const match = entries.find((e) => productImageKey(e.product.name) === key);
+      if (!match) return;
+      // A link from before a product was renamed: show the product's current link instead
+      if (key !== linked) history.replaceState(null, "", window.location.pathname + window.location.search + HASH_PREFIX + key);
+      productSheet.open(match.product, match.tint);
     }
     syncFromAddress();
     window.addEventListener("popstate", syncFromAddress);
@@ -79,7 +85,12 @@ export default function ProductSheet({ entries }: Props) {
   const allergens = detailText(product?.allergens);
   const storage = detailText(product?.storage_guidance);
   // Researched typical-recipe info is labelled as such until the owner confirms it
-  const researched = !!product && !isConfirmed(product) && !!(ingredients || allergens || storage);
+  const comingSoon = !!product && isComingSoon(product);
+  const hasDetails = !!(ingredients || allergens || storage);
+  const researched = !!product && !comingSoon && !isConfirmed(product) && hasDetails;
+  // No ingredients, allergens or storage yet (a new or coming-soon product): one notice instead of the rows
+  const detailsPending = comingSoon || !hasDetails;
+  const packSize = product?.pack_size.trim() ?? "";
   const pending = <span className="italic">Not yet confirmed — we&rsquo;re checking this with our supplier.</span>;
 
   return (
@@ -137,10 +148,13 @@ export default function ProductSheet({ entries }: Props) {
                   >
                     {product.name}
                   </h2>
-                  <p className="mt-3 flex items-baseline gap-3">
-                    <span className="font-heading text-2xl tabular-nums">£{Number(product.price_gbp).toFixed(2)}</span>
-                    <span className="text-sm text-cocoa-soft">{product.pack_size}</span>
-                  </p>
+                  {/* Coming soon: no price yet (the photo label and the button already say so) */}
+                  {!comingSoon && (
+                    <p className="mt-3 flex items-baseline gap-3">
+                      <span className="font-heading text-2xl tabular-nums">£{Number(product.price_gbp).toFixed(2)}</span>
+                      {packSize && <span className="text-sm text-cocoa-soft">{packSize}</span>}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -155,6 +169,13 @@ export default function ProductSheet({ entries }: Props) {
                 </p>
               )}
 
+              {detailsPending ? (
+                <p className="mt-8 rounded-lg bg-oat-deep px-4 py-3 text-sm text-cocoa">
+                  <strong className="font-semibold">Ingredients and allergens coming soon.</strong> We&rsquo;re still
+                  confirming this snack&rsquo;s ingredients, allergens and storage with our supplier, so please
+                  don&rsquo;t order it if you have an allergy until you&rsquo;ve checked with us.
+                </p>
+              ) : (
               <dl className={`${researched ? "mt-6" : "mt-8"} divide-y divide-cocoa/10 border-y border-cocoa/10`}>
                 <div className="py-4">
                   <dt className="text-eyebrow text-cocoa">Ingredients</dt>
@@ -170,11 +191,14 @@ export default function ProductSheet({ entries }: Props) {
                   <dt className="text-eyebrow text-cocoa">Storage</dt>
                   <dd className="mt-2 text-cocoa-soft">{storage ?? pending}</dd>
                 </div>
-                <div className="py-4">
-                  <dt className="text-eyebrow text-cocoa">Pack size</dt>
-                  <dd className="mt-2 text-cocoa-soft">{product.pack_size}</dd>
-                </div>
+                {packSize && (
+                  <div className="py-4">
+                    <dt className="text-eyebrow text-cocoa">Pack size</dt>
+                    <dd className="mt-2 text-cocoa-soft">{packSize}</dd>
+                  </div>
+                )}
               </dl>
+              )}
 
               <p className="mt-6 border-l-2 border-terracotta pl-4 text-sm text-cocoa">
                 <strong className="font-semibold">Allergies or dietary needs?</strong> Please{" "}
@@ -194,6 +218,7 @@ export default function ProductSheet({ entries }: Props) {
             <div className="border-t border-cocoa/10 bg-oat-deep/60 px-5 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:px-6">
               <AddToCartButton
                 variant="feature"
+                comingSoon={comingSoon}
                 soldOut={!product.available}
                 item={{
                   productId: product.id,

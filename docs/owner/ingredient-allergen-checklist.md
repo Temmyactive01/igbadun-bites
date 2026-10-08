@@ -112,7 +112,7 @@ Leave nothing as "probably".
 - **Contains:** ________ **May contain:** ________
 - **Storage:** ________________________________
 
-### 5. Milky Chin Chin — 250g
+### 5. Chin Chin — 250g
 - **On the site now:** "Golden, crunchy and lightly sweet with a milky richness: the bowl everyone hovers around at every party."  
   Correct? ☐ yes ☐ no, it should say: ________________________________
 - **Typical ingredients (to check):** wheat flour, sugar, milk or milk powder, butter or margarine, often egg, nutmeg, baking powder, frying oil.
@@ -158,7 +158,7 @@ Leave nothing as "probably".
 - **Contains:** ________ **May contain:** ________
 - **Storage:** ________________________________
 
-### 10. Baba Dudu — 150g
+### 10. Babadudu — 150g
 - **On the site now:** "Dark, chewy coconut caramel, cooked slowly until it's almost black. That's how it got its name: baba dudu, "the dark old man"."  
   Correct? ☐ yes ☐ no, it should say: ________________________________
 - **Typical ingredients (to check):** coconut milk or cream and sugar, cooked to a dark caramel, pinch of salt (it's a dark coconut candy, "sweet alagbon"); some versions add milk or butter.
@@ -176,7 +176,7 @@ Leave nothing as "probably".
 - **Contains:** ________ **May contain:** ________
 - **Storage:** ________________________________
 
-### 12. Dankwa — 150g ⚠ check the recipe
+### 12. Donkwa — 150g ⚠ check the recipe
 - **On the site now:** "Roasted groundnuts and grain pounded with ginger and a little pepper, then pressed into balls: sweet, nutty, with a gentle warmth."  
   Correct? ☐ yes ☐ no, it should say: ________________________________
 - **⚠ Please confirm the recipe.** Dankwa is usually roasted **groundnuts** ground with **maize or millet**, sugar, and often ginger or pepper, pressed into balls. The site now describes it that way.

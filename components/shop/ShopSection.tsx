@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
 import { CONTACT } from "@/lib/contact";
+import { productImageKey } from "@/lib/product-images";
+import { countForSale } from "@/lib/product-status";
 import { categoryAnchor, getProducts, groupByCategory } from "@/lib/products";
 import { CHAPTERS, FALLBACK_TINT, FEATURED_PRODUCT_NAME } from "@/lib/shop-content";
 import Chapter from "./Chapter";
@@ -16,8 +18,11 @@ export default async function ShopSection() {
   const { products, error } = await getProducts();
   const groups = groupByCategory(products);
   const featured =
-    products.find((p) => p.name === FEATURED_PRODUCT_NAME && p.available) ?? products.find((p) => p.available);
-  const count = numberWords[products.length] ?? String(products.length);
+    products.find((p) => productImageKey(p.name) === productImageKey(FEATURED_PRODUCT_NAME) && p.available) ??
+    products.find((p) => p.available && !p.coming_soon);
+  // Counts leave out coming-soon products
+  const forSale = countForSale(products);
+  const count = numberWords[forSale] ?? String(forSale);
 
   return (
     <section id="shop" aria-labelledby="shop-title" className="scroll-mt-16 lg:scroll-mt-20">
@@ -35,8 +40,8 @@ export default async function ShopSection() {
               for later.
             </p>
             <p className="mt-4 text-sm text-cocoa-soft">
-              Photos are stand-ins showing typical versions of each snack, not our own products — our product
-              photography is coming soon. <Link href="/credits" className="underline decoration-terracotta/50 underline-offset-4 hover:decoration-terracotta">
+              Some photos are stand-ins showing typical versions of a snack, not our own products — the rest are
+              ours, with more coming soon. <Link href="/credits" className="underline decoration-terracotta/50 underline-offset-4 hover:decoration-terracotta">
                 Photo credits
               </Link>
             </p>
@@ -58,7 +63,7 @@ export default async function ShopSection() {
               id: categoryAnchor(g.category),
               title: CHAPTERS[g.category]?.title ?? g.category,
               shortTitle: CHAPTERS[g.category]?.shortTitle ?? g.category,
-              count: g.products.length,
+              count: countForSale(g.products),
             }))}
           />
 

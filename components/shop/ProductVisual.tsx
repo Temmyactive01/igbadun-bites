@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { productImageKey, productImageSrc } from "@/lib/product-images";
+import { isComingSoon } from "@/lib/product-status";
 import { STAND_IN_IMAGES } from "@/lib/stand-in-images";
 import type { Product } from "@/lib/types";
 
@@ -20,7 +21,9 @@ type Props = {
 export default function ProductVisual({ product, tint, sizes, large = false, preload = false }: Props) {
   const photo = productImageSrc(product.name);
   const standIn = photo ? null : STAND_IN_IMAGES[productImageKey(product.name)];
-  const soldOut = !product.available;
+  // Coming soon: full colour (it isn't sold out), labelled instead
+  const comingSoon = isComingSoon(product);
+  const soldOut = !product.available && !comingSoon;
 
   return (
     <div
@@ -55,8 +58,10 @@ export default function ProductVisual({ product, tint, sizes, large = false, pre
           </span>
         </div>
       )}
-      {soldOut && (
-        <span className="text-eyebrow absolute top-3 right-3 rounded-full bg-oat px-3 py-1.5 text-cocoa">Sold out</span>
+      {(soldOut || comingSoon) && (
+        <span className="text-eyebrow absolute top-3 right-3 rounded-full bg-oat px-3 py-1.5 text-cocoa">
+          {comingSoon ? "Coming soon" : "Sold out"}
+        </span>
       )}
     </div>
   );

@@ -43,3 +43,10 @@ next-env.d.ts
 # generated at build time by scripts/list-product-images.mjs
 /lib/generated/
 /public/product-images.json
+
+# owner's original photos as sent (processed copies live in public/images/products/)
+/owner-photos/
+/public/images/owner-photos/
+
+# product photos ready for products that are still hidden (move into public/images/products/ at launch)
+/pending-photos/

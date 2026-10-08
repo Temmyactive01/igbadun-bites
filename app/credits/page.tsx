@@ -37,8 +37,9 @@ export default function CreditsPage() {
         <p className="text-eyebrow text-cocoa-soft">Photo credits</p>
         <h1 className="text-display-l serif-editorial mt-5">With thanks.</h1>
         <p className="text-body-l mt-6 text-cocoa-soft">
-          Until our own product photography is ready, the shop uses licensed photos from other photographers. They show
-          typical versions of each snack — <strong className="font-medium text-cocoa">not Igbadun Bites&rsquo; own products</strong>.
+          Some products in the shop are shown with our own photos. The rest use licensed photos from other
+          photographers until ours are ready. Those show typical versions of a snack —{" "}
+          <strong className="font-medium text-cocoa">not Igbadun Bites&rsquo; own products</strong>.
         </p>
 
         <section aria-labelledby="product-photos" className="mt-12">

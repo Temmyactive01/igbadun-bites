@@ -1,5 +1,6 @@
 import AddToCartButton from "@/components/cart/AddToCartButton";
 import type { Product } from "@/lib/types";
+import { isComingSoon } from "@/lib/product-status";
 import DetailsTrigger from "./DetailsTrigger";
 import ProductVisual from "./ProductVisual";
 
@@ -9,6 +10,7 @@ type Props = { product: Product; tint: string };
 // The image, the name and "Details & allergens" all open the product detail panel
 // (ingredients, allergens, storage); the add control morphs into a quantity stepper.
 export default function ProductTile({ product, tint }: Props) {
+  const comingSoon = isComingSoon(product);
   const price = `£${Number(product.price_gbp).toFixed(2)}`;
   const pence = Math.round(Number(product.price_gbp) * 100);
 
@@ -31,19 +33,22 @@ export default function ProductTile({ product, tint }: Props) {
               {product.name}
             </DetailsTrigger>
           </h3>
-          <span className="shrink-0 font-medium tabular-nums">{price}</span>
+          {/* Coming soon: no price yet */}
+          {!comingSoon && <span className="shrink-0 font-medium tabular-nums">{price}</span>}
         </div>
         <DetailsTrigger
           product={product}
           tint={tint}
-          label={`Details and allergens for ${product.name}`}
+          label={comingSoon ? `Details for ${product.name}` : `Details and allergens for ${product.name}`}
           className="mt-1 self-start rounded-sm text-xs text-cocoa-soft underline decoration-cocoa/25 underline-offset-4 hover:text-cocoa hover:decoration-terracotta sm:text-sm"
         >
-          Details &amp; allergens
+          {comingSoon ? "Details" : <>Details &amp; allergens</>}
         </DetailsTrigger>
         <div className="mt-3 flex flex-1 flex-wrap items-end justify-between gap-2">
-          <span className="text-xs text-cocoa-soft sm:text-sm">{product.pack_size}</span>
+          {/* Coming soon: no pack size yet (keeps the button on the right) */}
+          <span className="text-xs text-cocoa-soft sm:text-sm">{comingSoon ? "" : product.pack_size}</span>
           <AddToCartButton
+            comingSoon={comingSoon}
             soldOut={!product.available}
             item={{ productId: product.id, name: product.name, packSize: product.pack_size, category: product.category, pricePence: pence }}
           />

@@ -13,6 +13,11 @@ export type Product = {
   // Missing (migration not yet run) is treated as "researched".
   details_status?: "researched" | "confirmed";
   available: boolean;
+  // Added in supabase/006_product_visibility.sql: false = hidden from customers entirely
+  visible?: boolean;
+  // Added in supabase/008_coming_soon.sql: announced before its price and details are
+  // ready — shown with photo and name as "Coming soon", never purchasable
+  coming_soon?: boolean;
   created_at: string;
 };
 

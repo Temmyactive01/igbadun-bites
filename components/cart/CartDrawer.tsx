@@ -78,7 +78,8 @@ export default function CartDrawer() {
                       <p className="font-medium tabular-nums">{formatPence(item.pricePence * item.quantity)}</p>
                     </div>
                     <p className="mt-0.5 text-sm text-cocoa-soft">
-                      {item.packSize} · {formatPence(item.pricePence)} each
+                      {item.packSize ? `${item.packSize} · ` : ""}
+                      {formatPence(item.pricePence)} each
                     </p>
                     <div className="mt-3 flex items-center justify-between gap-3">
                       <QuantityStepper
