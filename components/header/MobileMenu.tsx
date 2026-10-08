@@ -7,17 +7,18 @@ import SignInButton from "@/components/SignInButton";
 import { CONTACT } from "@/lib/contact";
 import { useDialog } from "@/lib/use-dialog";
 
-type Props = { signedIn: boolean; firstName: string; overlay: boolean };
+type Props = { signedIn: boolean; firstName: string; overlay: boolean; shopNote: string };
 
 const noop = () => () => {};
 
-const LINKS = [
-  { href: "/#shop", label: "Shop", note: "Thirteen snacks, three chapters" },
+// The Shop note ("Fourteen snacks, three chapters") is counted from the products (SiteHeader)
+const links = (shopNote: string) => [
+  { href: "/#shop", label: "Shop", note: shopNote },
   { href: "/#story", label: "Our story", note: "Made for sharing" },
 ];
 
 // Phone navigation: a full-screen editorial sheet instead of a cramped header.
-export default function MobileMenu({ signedIn, firstName, overlay }: Props) {
+export default function MobileMenu({ signedIn, firstName, overlay, shopNote }: Props) {
   const [open, setOpen] = useState(false);
   const closeRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -69,13 +70,13 @@ export default function MobileMenu({ signedIn, firstName, overlay }: Props) {
         </div>
 
         <nav aria-label="Main" className="flex flex-1 flex-col justify-center gap-2 px-6">
-          {LINKS.map((link, i) => (
+          {links(shopNote).map((link, i) => (
             <Link key={link.href} href={link.href} onClick={close} className="group block border-b border-cocoa/10 py-5">
               <span className="text-eyebrow text-cocoa-soft">0{i + 1}</span>
               <span className="serif-editorial mt-1 block font-heading text-5xl tracking-tight group-hover:italic">
                 {link.label}
               </span>
-              <span className="mt-1 block text-sm text-cocoa-soft">{link.note}</span>
+              {link.note && <span className="mt-1 block text-sm text-cocoa-soft">{link.note}</span>}
             </Link>
           ))}
           {signedIn && (

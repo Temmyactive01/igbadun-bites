@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { createClient } from "@/lib/supabase/server";
 import type { Product } from "@/lib/types";
 
@@ -7,7 +8,8 @@ export const CATEGORY_ORDER = ["Chips", "Crunchy snacks", "Traditional treats an
 
 export type CategoryGroup = { category: string; products: Product[] };
 
-export async function getProducts(): Promise<{ products: Product[]; error: string | null }> {
+// Cached per request: the header (phone menu) and the shop both use it on the same page
+export const getProducts = cache(async (): Promise<{ products: Product[]; error: string | null }> => {
   const supabase = await createClient();
   const { data, error } = await supabase.from("products").select("*").order("name");
   if (error) {
@@ -15,7 +17,7 @@ export async function getProducts(): Promise<{ products: Product[]; error: strin
     return { products: [], error: error.message };
   }
   return { products: data as Product[], error: null };
-}
+});
 
 export function groupByCategory(products: Product[]): CategoryGroup[] {
   const rank = (c: string) => {

@@ -7,7 +7,7 @@ import CartButton from "@/components/cart/CartButton";
 import SignInButton from "@/components/SignInButton";
 import MobileMenu from "./MobileMenu";
 
-type Props = { signedIn: boolean; firstName: string };
+type Props = { signedIn: boolean; firstName: string; shopNote: string };
 
 export const NAV = [
   { href: "/#shop", label: "Shop" },
@@ -17,7 +17,7 @@ export const NAV = [
 // Sticky site header. On the homepage it starts transparent over the hero image
 // (light text), then settles into a solid oat bar once you scroll. Everywhere
 // else it's the solid bar from the start.
-export default function HeaderBar({ signedIn, firstName }: Props) {
+export default function HeaderBar({ signedIn, firstName, shopNote }: Props) {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
 
@@ -73,7 +73,7 @@ export default function HeaderBar({ signedIn, firstName }: Props) {
         {/* Phones */}
         <div className="flex items-center gap-1 min-[360px]:gap-2 md:hidden">
           <CartButton overlay={overlay} />
-          <MobileMenu signedIn={signedIn} firstName={firstName} overlay={overlay} />
+          <MobileMenu signedIn={signedIn} firstName={firstName} overlay={overlay} shopNote={shopNote} />
         </div>
       </div>
     </header>

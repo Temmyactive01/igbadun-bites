@@ -1,3 +1,5 @@
+import { shopSummary } from "@/lib/product-status";
+import { getProducts } from "@/lib/products";
 import { createClient } from "@/lib/supabase/server";
 import HeaderBar from "./header/HeaderBar";
 
@@ -13,5 +15,10 @@ export default async function SiteHeader() {
   const fullName = meta.full_name ?? meta.name ?? claims?.email ?? "";
   const firstName = fullName.split(/[\s@]/)[0];
 
-  return <HeaderBar signedIn={Boolean(claims)} firstName={firstName} />;
+  // The phone menu's "Fourteen snacks, three chapters", counted from the shop's products
+  // (no note if they can't be loaded)
+  const { products, error } = await getProducts();
+  const shopNote = error || products.length === 0 ? "" : shopSummary(products);
+
+  return <HeaderBar signedIn={Boolean(claims)} firstName={firstName} shopNote={shopNote} />;
 }

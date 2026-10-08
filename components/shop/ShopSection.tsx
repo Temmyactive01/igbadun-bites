@@ -2,15 +2,13 @@ import Link from "next/link";
 import Reveal from "@/components/Reveal";
 import { CONTACT } from "@/lib/contact";
 import { productImageKey } from "@/lib/product-images";
-import { countForSale } from "@/lib/product-status";
+import { countForSale, numberWord } from "@/lib/product-status";
 import { categoryAnchor, getProducts, groupByCategory } from "@/lib/products";
 import { CHAPTERS, FALLBACK_TINT, FEATURED_PRODUCT_NAME } from "@/lib/shop-content";
 import Chapter from "./Chapter";
 import ChapterIndex from "./ChapterIndex";
 import FeaturedProduct from "./FeaturedProduct";
 import ProductSheet from "./ProductSheet";
-
-const numberWords = ["No", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen", "Twenty"];
 
 // Product discovery (redesign Phase 2): intro, sticky chapter index, a featured
 // product, then one magazine "chapter" per category.
@@ -22,7 +20,7 @@ export default async function ShopSection() {
     products.find((p) => p.available && !p.coming_soon);
   // Counts leave out coming-soon products
   const forSale = countForSale(products);
-  const count = numberWords[forSale] ?? String(forSale);
+  const count = numberWord(forSale);
 
   return (
     <section id="shop" aria-labelledby="shop-title" className="scroll-mt-16 lg:scroll-mt-20">
