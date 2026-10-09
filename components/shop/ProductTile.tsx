@@ -36,13 +36,17 @@ export default function ProductTile({ product, tint }: Props) {
           {/* Coming soon: no price yet */}
           {!comingSoon && <span className="shrink-0 font-medium tabular-nums">{price}</span>}
         </div>
+        {/* The product name is added as screen-reader-only text after the visible label
+            instead of as an aria-label, so the accessible name still contains the visible
+            "Details & allergens" (WCAG 2.5.3 Label in Name). An aria-label of "Details and
+            allergens for X" replaced it, and "and" never matches the visible "&". */}
         <DetailsTrigger
           product={product}
           tint={tint}
-          label={comingSoon ? `Details for ${product.name}` : `Details and allergens for ${product.name}`}
           className="mt-1 self-start rounded-sm text-xs text-cocoa-soft underline decoration-cocoa/25 underline-offset-4 hover:text-cocoa hover:decoration-terracotta sm:text-sm"
         >
           {comingSoon ? "Details" : <>Details &amp; allergens</>}
+          <span className="sr-only"> for {product.name}</span>
         </DetailsTrigger>
         <div className="mt-3 flex flex-1 flex-wrap items-end justify-between gap-2">
           {/* Coming soon: no pack size yet (keeps the button on the right) */}

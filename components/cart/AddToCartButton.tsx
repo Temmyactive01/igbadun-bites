@@ -65,7 +65,6 @@ export default function AddToCartButton({ item, soldOut = false, comingSoon = fa
           ref={addRef}
           type="button"
           onClick={() => change(1)}
-          aria-label={`Add ${item.name} to basket`}
           className={`press morph-in inline-flex ${height} items-center justify-center gap-2 rounded-full font-medium ${
             feature
               ? "bg-cocoa px-8 text-base text-oat hover:bg-terracotta"
@@ -73,6 +72,11 @@ export default function AddToCartButton({ item, soldOut = false, comingSoon = fa
           }`}
         >
           {feature ? "Add to basket" : "Add"}
+          {/* Which product is only clear from context on screen, so the name is spelled out
+              for screen readers — appended to the visible text rather than replacing it via
+              aria-label, so the accessible name still contains what's on screen
+              (WCAG 2.5.3 Label in Name). sr-only is absolutely positioned, so it adds no gap. */}
+          <span className="sr-only">{feature ? `: ${item.name}` : ` ${item.name} to basket`}</span>
           <span aria-hidden>+</span>
         </button>
         {live}

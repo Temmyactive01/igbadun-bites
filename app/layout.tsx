@@ -35,8 +35,28 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       suppressHydrationWarning
     >
       <head>
-        {/* Marks that JS is running, so scroll-reveal only hides content when it can reveal it again */}
-        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+        {/* Runs while <head> is still parsing, before React hydrates. Two jobs:
+            1. Mark that JS is running, so scroll-reveal only hides content when it can
+               reveal it again.
+            2. Remove the marketing comment Netlify injects into <head> on production
+               deploys (right after the charset meta). React hydration counts that
+               foreign node as a mismatch and logs recoverable error #418 on every page
+               load. Verified: with the comment present React reports #418, without it
+               the console is clean. Deploy previews aren't affected — Netlify only
+               injects it on the production URL. Safe to delete if Netlify stops. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `document.documentElement.classList.add('js');
+for (var n of Array.prototype.slice.call(document.head.childNodes)) {
+  if (n.nodeType === 8 && n.nodeValue.indexOf('hosted on Netlify') !== -1) {
+    var before = n.previousSibling, after = n.nextSibling;
+    if (after && after.nodeType === 3 && !after.nodeValue.trim()) after.remove();
+    if (before && before.nodeType === 3 && !before.nodeValue.trim()) before.remove();
+    n.remove();
+  }
+}`,
+          }}
+        />
       </head>
       <body className="min-h-full flex flex-col">
         {/* Keyboard users can jump straight past the header (every page's <main> has id="main") */}

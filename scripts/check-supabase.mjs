@@ -16,15 +16,17 @@ const fail = (msg) => {
 const publicClient = createClient(url, anonKey);
 const adminClient = createClient(url, secretKey, { auth: { persistSession: false } });
 
-// 1. Public key can read the catalog
+// 1. Public key can read the catalog.
+// Deliberately no expected count: the catalogue grows (13 at launch, 14 since Kokoro),
+// and a hardcoded number only ever fails for the wrong reason.
 const { data: products, error: readError } = await publicClient
   .from("products")
   .select("name, category, pack_size, price_gbp")
   .order("category")
   .order("name");
 if (readError) fail(`public read: ${readError.message}`);
-else if (products.length !== 13) fail(`expected 13 products, found ${products.length}`);
-else pass("public key can read all 13 products");
+else if (products.length === 0) fail("public read returned no products — is the catalogue seeded?");
+else pass(`public key can read the catalogue (${products.length} products)`);
 
 // 2. Public key can NOT write (Row Level Security)
 const { error: writeError } = await publicClient

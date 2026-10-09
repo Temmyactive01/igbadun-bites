@@ -21,11 +21,14 @@ export default function BasketBar() {
           open ? "pointer-events-none translate-y-full opacity-0" : "morph-in"
         }`}
       >
+        {/* No aria-label: the visible text ("Basket 3 £13.50 View") is the accessible name,
+            so it matches what a voice-control user can say — WCAG 2.5.3 Label in Name.
+            Nothing is appended because the visible text ends in "View", and inserting words
+            mid-way would break the match. "has popup dialog" covers the rest. */}
         <button
           type="button"
           onClick={cart.open}
           aria-haspopup="dialog"
-          aria-label={`Open basket: ${count} ${count === 1 ? "item" : "items"}, ${formatPence(subtotalPence)}`}
           className="press flex h-14 w-full items-center justify-between gap-3 rounded-full bg-cocoa pr-2 pl-5 text-oat shadow-[0_8px_24px_rgb(43_26_18/0.25)]"
         >
           <span className="flex items-center gap-2.5 text-sm font-medium">

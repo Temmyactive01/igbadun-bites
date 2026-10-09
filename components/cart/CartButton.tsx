@@ -12,7 +12,6 @@ export default function CartButton({ overlay = false }: { overlay?: boolean }) {
       type="button"
       onClick={cart.open}
       aria-haspopup="dialog"
-      aria-label={`Open basket, ${count} ${count === 1 ? "item" : "items"}`}
       className={`press inline-flex items-center gap-2 rounded-full py-1.5 pr-1.5 pl-4 text-sm font-medium ${
         overlay
           ? "bg-oat/10 text-oat ring-1 ring-oat/40 backdrop-blur-md hover:bg-oat/20"
@@ -28,6 +27,11 @@ export default function CartButton({ overlay = false }: { overlay?: boolean }) {
       >
         {count}
       </span>
+      {/* The accessible name is built from the visible text ("Basket 3") plus this, so it
+          contains what a voice-control user can see — WCAG 2.5.3 Label in Name. An
+          aria-label here would replace "Basket 3" instead of extending it.
+          "has popup dialog" already tells a screen reader it opens the basket. */}
+      <span className="sr-only">{count === 1 ? "item" : "items"}</span>
     </button>
   );
 }
